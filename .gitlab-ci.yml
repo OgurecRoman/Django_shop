@@ -1,8 +1,15 @@
 stages:
-- linting
+  - linting
 
 flake8:
-    stage: linting
-    image: registry.gitlab.com/pipeline-components/flake8:latest
-    script:
+  stage: linting
+  image: registry.gitlab.com/pipeline-components/flake8:latest
+  script:
     - flake8 --verbose
+
+black:
+  stage: linting
+  image: registry.gitlab.com/pipeline-components/black:latest
+  script:
+    - black --check
+
