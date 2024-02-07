@@ -6,10 +6,10 @@ venv/Scripts/activate # для windows
 
 python3 -m pip install --upgrade pip
 
-pip install -r requirements.txt
+pip install -r requirements/prod.txt # основные зависимости
 
-black
+pip install -r requirements/dev.txt # зависимости для разработки
 
-black .
+pip install -r requirements/test.txt # зависимости для тестов
 
 python manage.py runserver
