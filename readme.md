@@ -1,3 +1,5 @@
+.env содержит секретные данные
+
 python -m venv venv
 
 source venv/bin/activate # для linux
