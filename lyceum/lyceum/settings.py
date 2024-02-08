@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
 import os
 from pathlib import Path
 
@@ -91,19 +92,19 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation."
-                "UserAttributeSimilarityValidator",
+        "UserAttributeSimilarityValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation."
-                "MinimumLengthValidator",
+        "MinimumLengthValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation."
-                "CommonPasswordValidator",
+        "CommonPasswordValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation."
-                "NumericPasswordValidator",
+        "NumericPasswordValidator",
     },
 ]
 
