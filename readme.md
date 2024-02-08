@@ -14,4 +14,6 @@ pip install -r requirements/dev.txt # зависимости для разраб
 
 pip install -r requirements/test.txt # зависимости для тестов
 
+[![pipeline status](https://gitlab.crja72.ru/django/2024/spring/course/students/159819-treninasonya-course-1112/badges/main/pipeline.svg)](https://gitlab.crja72.ru/django/2024/spring/course/students/159819-treninasonya-course-1112/-/commits/main)
+
 python manage.py runserver
