@@ -15,5 +15,4 @@ black:
   stage: refactoring
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
-    - black --config pyproject.toml .
     - black --check .
