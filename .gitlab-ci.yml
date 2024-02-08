@@ -1,14 +1,19 @@
 stages:
   - linting
+  - refactoring
+
+before_script:
+  - pip install -r requirements/dev.txt
 
 flake8:
   stage: linting
   image: registry.gitlab.com/pipeline-components/flake8:latest
   script:
-    - flake8 --verbose
+    - flake8 --inline-quotes double .
 
-black_formatting:
-  image: python:3.6
-  stage: linting
+black:
+  stage: refactoring
+  image: registry.gitlab.com/pipeline-components/black:latest
   script:
+    - black --config pyproject.toml .
     - black --check .
