@@ -4,8 +4,6 @@ stages:
 
 before_script:
   - pip install -r requirements/dev.txt
-  - pip install -r requirements/test.txt
-  - pip install -r requirements/prod.txt
 
 flake8:
   stage: linting
@@ -24,5 +22,7 @@ mypy:
   image: registry.gitlab.com/pipeline-components/mypy:latest
   script:
    - pip install mypy
+   - pip install python-dotenv
+   - pip install django-stubs==1.12.0
+   - pip install django-stubs-ext==4.2.7
    - mypy --verbose .
-
