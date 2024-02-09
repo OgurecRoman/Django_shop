@@ -19,7 +19,7 @@ black:
 
 mypy:
   stage: linting
-  image: registry.gitlab.com/pipeline-components/mypy:latest
+  image: python:latest
   script:
    - pip install mypy
    - pip install python-dotenv
