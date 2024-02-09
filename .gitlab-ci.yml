@@ -16,3 +16,13 @@ black:
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
     - black --check .
+
+mypy:
+  stage: linting
+  script:
+   - pip install mypy
+   - pip install python-dotenv
+   - pip install django-stubs==1.12.0
+   - pip install django-stubs-ext==4.2.7
+   - mypy --verbose .
+

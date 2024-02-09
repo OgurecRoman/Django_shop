@@ -1,3 +1,7 @@
-[tool.black]
-line-length = 79
-target-version = ['py312']
+[tool.mypy]
+mypy_path = "./lyceum"
+plugins = ["mypy_django_plugin.main"]
+strict = true
+
+[tool.django-stubs]
+django_settings_module = "lyceum. Settings"
