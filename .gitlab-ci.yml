@@ -1,18 +1,19 @@
 stages:
   - linting
+  - refactoring
 
 flake8:
   stage: linting
   image: registry.gitlab.com/pipeline-components/flake8:latest
   script:
     - pip install pep8-naming flake8-import-order flake8-quotes
-    - flake8 --exclude --inline-quotes double venv lyceum
+    - flake8 --exclude venv lyceum --inline-quotes double
 
 black:
-  stage: linting
+  stage: refactoring
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
-    - black --line-length 79 --exclude venv --check --skip-string-normalization
+    - black --check
 
 mypy:
   stage: linting
