@@ -1,6 +1,5 @@
 stages:
   - linting
-  - refactoring
 
 flake8:
   stage: linting
@@ -10,7 +9,7 @@ flake8:
     - flake8 --exclude venv lyceum --inline-quotes double
 
 black:
-  stage: refactoring
+  stage: linting
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
     - black --check lyceum
