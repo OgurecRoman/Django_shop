@@ -1,16 +1,12 @@
 stages:
   - linting
 
-before_script:
-  - pip install -r requirements/dev.txt
-  - pip install -r requirements/test.txt
-
 flake8:
   stage: linting
   image: registry.gitlab.com/pipeline-components/flake8:latest
   script:
     - pip install pep8-naming flake8-import-order flake8-quotes
-    - flake8 --exclude venv lyceum
+    - flake8 --exclude --inline-quotes double venv lyceum
 
 black:
   stage: linting
@@ -22,8 +18,8 @@ mypy:
   stage: linting
   image: python:latest
   script:
-   - pip install mypy
-   - pip install python-dotenv
-   - pip install django-stubs==1.12.0
-   - pip install django-stubs-ext==4.2.7
-   - mypy --verbose .
+    - pip install mypy
+    - pip install python-dotenv
+    - pip install django-stubs==1.12.0
+    - pip install django-stubs-ext==4.2.7
+    - mypy --verbose .
