@@ -13,7 +13,7 @@ black:
   stage: refactoring
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
-    - black --check
+    - black --check lyceum
 
 mypy:
   stage: linting
