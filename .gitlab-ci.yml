@@ -2,6 +2,11 @@ stages:
   - linting
   - test
 
+before_script:
+  - pip3 install -r requirements/prod.txt
+  - pip3 install -r requirements/dev.txt
+  - pip3 install -r requirements/test.txt
+
 flake8:
   stage: linting
   image: registry.gitlab.com/pipeline-components/flake8:latest
