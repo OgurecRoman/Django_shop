@@ -10,21 +10,18 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-try:
-    SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
-except KeyError:
-    SECRET_KEY = os.getenv("SECRET_KEY", default="test")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", default="test")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-try:
-    DEBUG = os.environ["DJANGO_DEBUG"]
-except KeyError:
-    DEBUG = os.getenv("DEBUG", default=True)
+DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() in (
+    "true",
+    "yes",
+    "1",
+    "y",
+    "t",
+)
 
-try:
-    ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split()
-except KeyError:
-    ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split()
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split()
 
 # Application definition
 
