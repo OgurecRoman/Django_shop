@@ -1,6 +1,6 @@
 stages:
   - linting
-  - build
+  - test
 
 flake8:
   stage: linting
@@ -17,7 +17,7 @@ black:
 
 test:
   stage: test
-  image: python:3.12
+  image: python:3.10
   script:
     - cd lyceum
     - python3 manage.py test
