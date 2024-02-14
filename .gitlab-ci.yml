@@ -3,6 +3,7 @@ stages:
   - test
 
 before_script:
+  - pip install --upgrade pip
   - pip3 install -r requirements/prod.txt
   - pip3 install -r requirements/dev.txt
   - pip3 install -r requirements/test.txt
