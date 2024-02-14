@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import Client, TestCase
 
 
 class StaticURLTests(TestCase):
@@ -17,4 +17,3 @@ class StaticURLTests(TestCase):
     def test_catalog_num_endpoint(self):
         response = Client().get("catalog/1/")
         self.assertEqual(response.status_code, 200)
-

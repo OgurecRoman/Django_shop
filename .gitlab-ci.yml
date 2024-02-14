@@ -1,6 +1,5 @@
 stages:
   - linting
-  - static_type_checking
 
 flake8:
   stage: linting
