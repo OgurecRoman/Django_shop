@@ -1,1 +1,2 @@
 black==24.1.1
+django_debug_toolbar==4.3.0

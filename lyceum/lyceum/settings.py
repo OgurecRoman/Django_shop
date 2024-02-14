@@ -10,12 +10,21 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", default="test")
+try:
+    SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+except KeyError:
+    SECRET_KEY = os.getenv("SECRET_KEY", default="test")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", default="true").lower()
+try:
+    DEBUG = os.environ['DJANGO_DEBUG']
+except KeyError:
+    DEBUG = os.getenv("DEBUG", default=True)
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split()
+try:
+    ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split()
+except KeyError:
+    ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split()
 
 # Application definition
 
@@ -23,12 +32,14 @@ INSTALLED_APPS = [
     "catalog.apps.CatalogConfig",
     "about.apps.AboutConfig",
     "homepage.apps.HomepageConfig",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "debug_toolbar"
 ]
 
 MIDDLEWARE = [
@@ -39,6 +50,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware"
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1"
 ]
 
 ROOT_URLCONF = "lyceum.urls"
