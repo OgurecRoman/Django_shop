@@ -23,7 +23,6 @@ black:
 
 test:
   stage: test
-  image: python:3.10
+  image: python:3.12
   script:
-    - cd lyceum
-    - python3 manage.py test
+    - python3 lyceum/manage.py test
