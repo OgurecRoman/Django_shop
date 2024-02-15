@@ -25,6 +25,6 @@ test:
   stage: test
   image: python:3.12
   script:
-    - pip install pyyml
+    - pip install PyYAML
     - cd lyceum
     - python3 manage.py test
