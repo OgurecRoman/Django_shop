@@ -7,7 +7,7 @@ dotenv_path = Path(".") / ".env"
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", default="test")
@@ -21,7 +21,9 @@ DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() in (
     "t",
 )
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split()
+ALLOWED_HOSTS = list(
+    map(str.strip, os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(","))
+)
 
 # Application definition
 
@@ -35,7 +37,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -46,10 +47,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
-
-INTERNAL_IPS = ["127.0.0.1"]
 
 ROOT_URLCONF = "lyceum.urls"
 
@@ -96,6 +94,11 @@ AUTH_PASSWORD_VALIDATORS = [
         "NumericPasswordValidator",
     },
 ]
+
+if DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+    INTERNAL_IPS = ["127.0.0.1", "localhost"]
 
 LANGUAGE_CODE = "en-us"
 
