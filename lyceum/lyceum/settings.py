@@ -27,6 +27,15 @@ ALLOWED_HOSTS = list(
     )
 )
 
+ALLOW_REVERSE = os.getenv("DJANGO_ALLOW_REVERSE", "True").lower() in (
+    "",
+    "true",
+    "True" "yes",
+    "YES",
+    "1",
+    "y",
+)
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "lyceum.middleware.ReverseMiddleware",
 ]
 
 ROOT_URLCONF = "lyceum.urls"
