@@ -1,1 +1,5 @@
-flake8==6.0.0
+black==24.1.1
+Django==4.2
+django_debug_toolbar==4.3.0
+python-dotenv==0.21.1
+flake8==7.0.0
