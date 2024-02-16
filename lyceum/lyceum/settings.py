@@ -26,6 +26,15 @@ ALLOWED_HOSTS = list(
         os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(","),
     )
 )
+
+ALLOW_REVERSE = os.getenv("DJANGO_ALLOW_REVERSE", "True").lower() in (
+    "",
+    "true",
+    "True" "yes",
+    "YES",
+    "1",
+    "y",
+)
 # Application definition
 
 INSTALLED_APPS = [
