@@ -11,7 +11,3 @@ def item_detail(request, pk):
 
 def re_item(request, pk):
     return HttpResponse(pk)
-
-
-def conv_item(request, ind):
-    return HttpResponse(ind)

@@ -5,8 +5,8 @@ from . import converters, views
 register_converter(converters.MyConverter, "mk")
 
 urlpatterns = [
-    path("catalog/", views.item_list),
-    path("catalog/<int:pk>/", views.item_detail),
-    path("catalog/converter/<mk:ind>/", views.conv_item),
-    re_path(r"catalog/re/(?P<pk>[1-9]\d*)/", views.re_item),
+    path("", views.item_list),
+    path("<int:pk>/", views.item_detail),
+    path("converter/<mk:pk>/", views.re_item),
+    re_path(r"re/(?P<pk>[1-9]\d*)/", views.re_item),
 ]

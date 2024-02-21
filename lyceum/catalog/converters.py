@@ -5,4 +5,4 @@ class MyConverter:
         return int(value)
 
     def to_url(self, value) -> str:
-        return "%04d" % value
+        return f"{value}"

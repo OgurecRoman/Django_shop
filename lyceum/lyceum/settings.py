@@ -5,6 +5,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+def load_bool(name, default):
+    env_value = os.getenv(name, str(default)).lower()
+    return env_value in {"true", "yes", "1", "y", "t"}
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -12,29 +18,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "test")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() in (
-    "true",
-    "yes",
-    "1",
-    "y",
-    "t",
-)
+DEBUG = load_bool("DJANGO_DEBUG", True)
 
-ALLOWED_HOSTS = list(
-    map(
-        str.strip,
-        os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(","),
-    )
-)
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
-ALLOW_REVERSE = os.getenv("DJANGO_ALLOW_REVERSE", "True").lower() in (
-    "",
-    "true",
-    "True" "yes",
-    "YES",
-    "1",
-    "y",
-)
+ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", False)
 
 # Application definition
 
