@@ -3,7 +3,7 @@ import re
 from django.conf import settings
 
 WORDS_REG = re.compile(r"\w+|\W+")
-RUSSIAN_REG = re.compile(r"[а-яА-ЯёЁ]+")
+NOT_RUSSIAN_REG = re.compile(r"^[^а-яА-ЯёЁ\s]+$")
 
 
 class ReverseMiddleware:
@@ -28,12 +28,13 @@ class ReverseMiddleware:
             return self.get_response(request)
 
         response = self.get_response(request)
-        content = response.content.decode("utf-8")
+        content = response.content.decode()
         words = WORDS_REG.findall(content)
 
         transformed = [
-            word[::-1] if RUSSIAN_REG.search(word) else word for word in words
+            word if NOT_RUSSIAN_REG.search(word) else word[::-1]
+            for word in words
         ]
 
-        response.content = "".join(transformed).encode("utf-8")
+        response.content = "".join(transformed).encode()
         return response
