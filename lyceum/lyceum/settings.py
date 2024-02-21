@@ -22,7 +22,7 @@ DEBUG = load_bool("DJANGO_DEBUG", True)
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
-ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", False)
+ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", True)
 
 # Application definition
 
