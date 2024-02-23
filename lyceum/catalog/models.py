@@ -14,8 +14,8 @@ def valid_item_text(value):
 
 
 def valid_category_weight(value):
-    if not (int(value) > 0):
-        raise django.core.exceptions.ValidationError("Должно быть больше нуля")
+    if not (int(value) in range(1, 32768)):
+        raise django.core.exceptions.ValidationError("От 0 до 32767")
 
 
 class AbstructModel(django.db.models.Model):
