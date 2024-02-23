@@ -91,6 +91,15 @@ class ModelsTests(django.test.TestCase):
             self.item.save()
             self.item.tags.add(self.tag)
 
+            self.item = models.Item(
+                name="Тестовый товар хороший",
+                category=self.category,
+                text="роскошное!",
+            )
+            self.item.full_clean()
+            self.item.save()
+            self.item.tags.add(self.tag)
+
             self.assertEqual(models.Item.objects.count(), item_count)
 
     def test_unable_create_item(self):
@@ -107,7 +116,7 @@ class ModelsTests(django.test.TestCase):
         self.assertEqual(models.Item.objects.count(), item_count + 1)
 
     def test_unable_create_slug_error(self):
-        item_count = models.Tag.objects.count()
+        tags_count = models.Tag.objects.count()
         with self.assertRaises(django.core.exceptions.ValidationError):
             self.tag = models.Tag(
                 name="Тестовый тег",
@@ -117,10 +126,10 @@ class ModelsTests(django.test.TestCase):
             self.tag.save()
             self.tag.add(ModelsTests.tag)
 
-            self.assertEqual(models.Tag.objects.count(), item_count)
+            self.assertEqual(models.Tag.objects.count(), tags_count)
 
     def test_unable_create_slug(self):
-        item_count = models.Tag.objects.count()
+        tags_count = models.Tag.objects.count()
         self.tag = models.Tag(
             name="Тестовый тег",
             slug="aboba",
@@ -128,4 +137,29 @@ class ModelsTests(django.test.TestCase):
         self.tag.full_clean()
         self.tag.save()
 
-        self.assertEqual(models.Tag.objects.count(), item_count + 1)
+        self.assertEqual(models.Tag.objects.count(), tags_count + 1)
+
+    def test_unable_create_category_error_valid(self):
+        category_count = models.Category.objects.count()
+        with self.assertRaises(django.core.exceptions.ValidationError):
+            self.category = models.Category(
+                is_published=True,
+                name="Тестовая категория",
+                slug="cat-slug-test",
+                weight=0,
+            )
+            self.category.full_clean()
+            self.category.save()
+            self.category.add(ModelsTests.category)
+
+            self.category = models.Category(
+                is_published=True,
+                name="Тестовая категория отличная",
+                slug="slug-test",
+                weight=64000,
+            )
+            self.category.full_clean()
+            self.category.save()
+            self.category.add(ModelsTests.category)
+
+            self.assertEqual(models.Category.objects.count(), category_count)

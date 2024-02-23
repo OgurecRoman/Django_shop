@@ -1,12 +1,21 @@
+import re
+
 import django.core.exceptions
 import django.db
 
 
 def valid_item_text(value):
-    if not ("превосходно" in value or "роскошно" in value):
+    words = re.compile(r"\w+|\W+").findall(value)
+    words = map(str.lower, words)
+    if not ("превосходно" in words or "роскошно" in words):
         raise django.core.exceptions.ValidationError(
             "Не найдено слов 'превосходно' или 'роскошно'"
         )
+
+
+def valid_category_weight(value):
+    if not (int(value) > 0):
+        raise django.core.exceptions.ValidationError("Должно быть больше нуля")
 
 
 class AbstructModel(django.db.models.Model):
@@ -27,7 +36,9 @@ class Tag(AbstructModel):
 
 class Category(AbstructModel):
     slug = django.db.models.SlugField("Слаг", max_length=200, unique=True)
-    weight = django.db.models.PositiveSmallIntegerField("Вес", default=100)
+    weight = django.db.models.SmallIntegerField(
+        "Вес", default=100, validators=[valid_category_weight]
+    )
 
     class Meta:
         verbose_name = "Категория"
