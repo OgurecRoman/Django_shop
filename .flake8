@@ -3,4 +3,3 @@ inline-quotes = double
 ignore = I202
 exclude =
     *\migrations\
-
