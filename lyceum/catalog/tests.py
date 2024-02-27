@@ -95,7 +95,9 @@ class ModelsTests(django.test.TestCase):
         item_count = models.Item.objects.count()
 
         item = models.Item(
-            name="Тестовый товар", text=text, category=self.category,
+            name="Тестовый товар",
+            text=text,
+            category=self.category,
         )
         item.full_clean()
         item.save()
@@ -121,7 +123,9 @@ class ModelsTests(django.test.TestCase):
 
         with self.assertRaises(django.core.exceptions.ValidationError):
             item = models.Item(
-                name="Тестовый товар", text=text, category=self.category,
+                name="Тестовый товар",
+                text=text,
+                category=self.category,
             )
             item.full_clean()
             item.save()

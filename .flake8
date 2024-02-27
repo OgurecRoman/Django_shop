@@ -2,6 +2,6 @@
 inline-quotes = double
 ignore =
         I202,
-        812,
+        C812,
         ABS101
 import_order_style = google
