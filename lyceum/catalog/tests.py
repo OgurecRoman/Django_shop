@@ -1,6 +1,6 @@
 import itertools
 
-import django.core
+import django.core.exceptions
 import django.test
 from django.test import Client, TestCase
 import parameterized
