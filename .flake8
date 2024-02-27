@@ -1,5 +1,7 @@
 [flake8]
 inline-quotes = double
-ignore = I202
-exclude =
-    *\migrations\
+ignore =
+        I202,
+        812,
+        ABS101
+import_order_style = google

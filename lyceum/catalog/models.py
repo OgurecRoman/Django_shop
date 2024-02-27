@@ -7,16 +7,18 @@ import django.db.models
 
 class Category(core.models.PublishedWithNameBaseModel):
     slug = django.db.models.SlugField(
-        "слаг", max_length=200, help_text="Максимум 200 символов"
+        "слаг",
+        max_length=200,
+        help_text="Максимум 200 символов",
     )
     weight = django.db.models.PositiveSmallIntegerField(
         "вес",
         validators=[
             django.core.validators.MinValueValidator(
-                1, message="Значение должно быть больше 0"
+                1, message="Значение должно быть больше 0",
             ),
             django.core.validators.MaxValueValidator(
-                32767, message="Значение должно быть меньше 32767"
+                32767, message="Значение должно быть меньше 32767",
             ),
         ],
         default=100,
@@ -33,7 +35,7 @@ class Category(core.models.PublishedWithNameBaseModel):
 
 
 class Tag(core.models.PublishedWithNameBaseModel):
-    slug = django.db.models.SlugField("слаг", max_length=200, unique=True)
+    slug = django.db.models.SlugField("слаг", max_length=200, unique=True,)
 
     class Meta:
         ordering = ("slug",)
@@ -52,7 +54,7 @@ class Item(core.models.PublishedWithNameBaseModel):
         verbose_name="категория",
         help_text="Выберите категорию",
     )
-    tags = django.db.models.ManyToManyField(Tag)
+    tags = django.db.models.ManyToManyField(Tag,)
     text = django.db.models.TextField(
         "описание",
         validators=[catalog.validators.validate_brilliant],
