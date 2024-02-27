@@ -1,12 +1,13 @@
 from django.urls import path, re_path, register_converter
 
-from . import converters, views
+import catalog.converters
+import catalog.views
 
-register_converter(converters.MyConverter, "mk")
+register_converter(catalog.converters.MyConverter, "mk")
 
 urlpatterns = [
-    path("", views.item_list),
-    path("<int:pk>/", views.item_detail),
-    path("converter/<mk:pk>/", views.re_item),
-    re_path(r"re/(?P<pk>[1-9]\d*)/", views.re_item),
+    path("", catalog.views.item_list),
+    path("<int:pk>/", catalog.views.item_detail),
+    path("converter/<mk:pk>/", catalog.views.re_item),
+    re_path(r"re/(?P<pk>[1-9]\d*)/", catalog.views.re_item),
 ]

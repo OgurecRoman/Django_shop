@@ -5,7 +5,7 @@ import django.test
 from django.test import Client, TestCase
 import parameterized
 
-from . import models
+import catalog.models
 
 
 class CatalogStaticURLTests(TestCase):
@@ -26,35 +26,37 @@ class CatalogStaticURLTests(TestCase):
             ("abc0", 404),
             ("$%^`", 404),
             ("1e5", 404),
-        ]
+        ],
     )
     def test_catalog_item_endpoint(self, url, expected_status):
         response = django.test.Client().get(f"/catalog/{url}/")
         self.assertEqual(response.status_code, expected_status)
 
     @parameterized.parameterized.expand(
-        map(
-            lambda x: (x[0], x[1][0], x[1][1]),
-            itertools.product(
-                [
-                    "converter",
-                    "re",
-                ],
-                [
-                    ("1", 200),
-                    ("100", 200),
-                    ("0", 404),
-                    ("-0", 404),
-                    ("-100", 404),
-                    ("0.5", 404),
-                    ("abc", 404),
-                    ("0abc", 404),
-                    ("abc0", 404),
-                    ("$%^`", 404),
-                    ("1e5", 404),
-                ],
-            ),
-        )
+        [
+            (x[0], x[1][0], x[1][1])
+            for x in list(
+                itertools.product(
+                    [
+                        "converter",
+                        "re",
+                    ],
+                    [
+                        ("1", 200),
+                        ("100", 200),
+                        ("0", 404),
+                        ("-0", 404),
+                        ("-100", 404),
+                        ("0.5", 404),
+                        ("abc", 404),
+                        ("0abc", 404),
+                        ("abc0", 404),
+                        ("$%^`", 404),
+                        ("1e5", 404),
+                    ],
+                ),
+            )
+        ],
     )
     def test_catalog_conv_endpoint(self, prefix, url, expected_status):
         full_url = f"/catalog/{prefix}/{url}/"
@@ -64,20 +66,20 @@ class CatalogStaticURLTests(TestCase):
 
 class ModelsTests(django.test.TestCase):
     def setUp(self):
-        self.category = models.Category.objects.create(
+        self.category = catalog.models.Category.objects.create(
             name="Тестовая категория 1",
             slug="cat-slug-test",
         )
-        self.tag = models.Tag.objects.create(
+        self.tag = catalog.models.Tag.objects.create(
             is_published=True,
             name="Тестовый тег",
             slug="tag-slug-test",
         )
 
     def tearDown(self):
-        models.Item.objects.all().delete()
-        models.Tag.objects.all().delete()
-        models.Category.objects.all().delete()
+        catalog.models.Item.objects.all().delete()
+        catalog.models.Tag.objects.all().delete()
+        catalog.models.Category.objects.all().delete()
 
         super(ModelsTests, self).tearDown()
 
@@ -89,12 +91,12 @@ class ModelsTests(django.test.TestCase):
             ("роскошно@",),
             ("!роскошно",),
             ("не роскошно",),
-        ]
+        ],
     )
     def test_item_validator(self, text):
-        item_count = models.Item.objects.count()
+        item_count = catalog.models.Item.objects.count()
 
-        item = models.Item(
+        item = catalog.models.Item(
             name="Тестовый товар",
             text=text,
             category=self.category,
@@ -104,7 +106,7 @@ class ModelsTests(django.test.TestCase):
         item.tags.add(self.tag)
 
         self.assertEqual(
-            models.Item.objects.count(),
+            catalog.models.Item.objects.count(),
             item_count + 1,
         )
 
@@ -116,13 +118,13 @@ class ModelsTests(django.test.TestCase):
             ("оскошно@",),
             ("р оскошно",),
             ("qwertyроскошно",),
-        ]
+        ],
     )
     def test_item_negative_validator(self, text):
-        item_count = models.Item.objects.count()
+        item_count = catalog.models.Item.objects.count()
 
         with self.assertRaises(django.core.exceptions.ValidationError):
-            item = models.Item(
+            item = catalog.models.Item(
                 name="Тестовый товар",
                 text=text,
                 category=self.category,
@@ -131,7 +133,7 @@ class ModelsTests(django.test.TestCase):
             item.save()
 
         self.assertEqual(
-            models.Item.objects.count(),
+            catalog.models.Item.objects.count(),
             item_count,
         )
 
@@ -140,13 +142,13 @@ class ModelsTests(django.test.TestCase):
             (-100,),
             (0,),
             (64000,),
-        ]
+        ],
     )
     def test_category_negative_validator(self, weight):
-        category_count = models.Category.objects.count()
+        category_count = catalog.models.Category.objects.count()
 
         with self.assertRaises(django.core.exceptions.ValidationError):
-            test_category = models.Category(
+            test_category = catalog.models.Category(
                 name="Тестовая категория",
                 weight=weight,
                 slug="test-cat",
@@ -155,7 +157,7 @@ class ModelsTests(django.test.TestCase):
             test_category.save()
 
         self.assertEqual(
-            models.Category.objects.count(),
+            catalog.models.Category.objects.count(),
             category_count,
         )
 
@@ -164,12 +166,12 @@ class ModelsTests(django.test.TestCase):
             (1,),
             (100,),
             (32000,),
-        ]
+        ],
     )
     def test_category_validator(self, weight):
-        category_count = models.Category.objects.count()
+        category_count = catalog.models.Category.objects.count()
 
-        test_category = models.Category(
+        test_category = catalog.models.Category(
             name="Тестовая категория",
             weight=weight,
             slug="test-cat",
@@ -178,6 +180,6 @@ class ModelsTests(django.test.TestCase):
         test_category.save()
 
         self.assertEqual(
-            models.Category.objects.count(),
+            catalog.models.Category.objects.count(),
             category_count + 1,
         )

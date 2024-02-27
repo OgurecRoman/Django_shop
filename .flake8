@@ -1,10 +1,5 @@
 [flake8]
 exclude = .git,__pycache__,.venv,venv,*/migrations/
-ignore =
-        C812,
-        ABS101,
-        C417,
-        E800
 import-order-style = google
 application-import-names = about, catalog, core, homepage, lyceum
 literal-inline-quotes = double
