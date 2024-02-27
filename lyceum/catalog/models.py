@@ -1,64 +1,68 @@
-import re
+import catalog.validators
+import core.models
 
-import django.core.exceptions
-import django.db
-
-
-def valid_item_text(value):
-    words = re.compile(r"\w+|\W+").findall(value)
-    words = map(str.lower, words)
-    if not ("превосходно" in words or "роскошно" in words):
-        raise django.core.exceptions.ValidationError(
-            "Не найдено слов 'превосходно' или 'роскошно'"
-        )
+import django.core.validators
+import django.db.models
 
 
-def valid_category_weight(value):
-    if not (int(value) in range(1, 32768)):
-        raise django.core.exceptions.ValidationError("От 0 до 32767")
-
-
-class AbstructModel(django.db.models.Model):
-    name = django.db.models.CharField("Название", max_length=150)
-    is_published = django.db.models.BooleanField("Опубликовано", default=True)
-
-    class Meta:
-        abstract = True
-
-
-class Tag(AbstructModel):
-    slug = django.db.models.SlugField("Слаг", max_length=200, unique=True)
-
-    class Meta:
-        verbose_name = "Тег"
-        verbose_name_plural = "Теги"
-
-
-class Category(AbstructModel):
-    slug = django.db.models.SlugField("Слаг", max_length=200, unique=True)
-    weight = django.db.models.SmallIntegerField(
-        "Вес", default=100, validators=[valid_category_weight]
+class Category(core.models.PublishedWithNameBaseModel):
+    slug = django.db.models.SlugField(
+        "слаг", max_length=200, help_text="Максимум 200 символов"
+    )
+    weight = django.db.models.PositiveSmallIntegerField(
+        "вес",
+        validators=[
+            django.core.validators.MinValueValidator(
+                1, message="Значение должно быть больше 0"
+            ),
+            django.core.validators.MaxValueValidator(
+                32767, message="Значение должно быть меньше 32767"
+            ),
+        ],
+        default=100,
+        help_text="Max 32767",
     )
 
     class Meta:
-        verbose_name = "Категория"
-        verbose_name_plural = "Категории"
+        ordering = ("weight", "id")
+        verbose_name = "категория"
+        verbose_name_plural = "категории"
+
+    def __str__(self):
+        return self.name
 
 
-class Item(AbstructModel):
-    text = django.db.models.TextField(
-        "Текст",
-        help_text="Введите описание объекта",
-        validators=[valid_item_text],
-    )
+class Tag(core.models.PublishedWithNameBaseModel):
+    slug = django.db.models.SlugField("слаг", max_length=200, unique=True)
+
+    class Meta:
+        ordering = ("slug",)
+        verbose_name = "тег"
+        verbose_name_plural = "теги"
+        default_related_name = "tags"
+
+    def __str__(self):
+        return self.name
+
+
+class Item(core.models.PublishedWithNameBaseModel):
     category = django.db.models.ForeignKey(
-        "category",
+        Category,
         on_delete=django.db.models.CASCADE,
-        related_name="catalog_item",
-        verbose_name="Категория",
+        verbose_name="категория",
+        help_text="Выберите категорию",
     )
-    tags = django.db.models.ManyToManyField(Tag, verbose_name="Теги")
+    tags = django.db.models.ManyToManyField(Tag)
+    text = django.db.models.TextField(
+        "описание",
+        validators=[catalog.validators.validate_brilliant],
+        help_text="Введите описание объекта",
+    )
 
     class Meta:
-        verbose_name = "Товар"
-        verbose_name_plural = "Товары"
+        verbose_name = "товар"
+        verbose_name_plural = "товары"
+        default_related_name = "items"
+
+    def __str__(self):
+        return self.name

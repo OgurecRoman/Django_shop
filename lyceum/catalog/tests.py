@@ -63,103 +63,117 @@ class CatalogStaticURLTests(TestCase):
 
 
 class ModelsTests(django.test.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
-        cls.category = models.Category.objects.create(
-            is_published=True,
-            name="Тестовая категория",
+    def setUp(self):
+        self.category = models.Category.objects.create(
+            name="Тестовая категория 1",
             slug="cat-slug-test",
-            weight=100,
         )
-        cls.tag = models.Tag.objects.create(
+        self.tag = models.Tag.objects.create(
             is_published=True,
             name="Тестовый тег",
             slug="tag-slug-test",
         )
 
-    def test_unable_create_without_prevosh(self):
+    def tearDown(self):
+        models.Item.objects.all().delete()
+        models.Tag.objects.all().delete()
+        models.Category.objects.all().delete()
+
+        super(ModelsTests, self).tearDown()
+
+    @parameterized.parameterized.expand(
+        [
+            ("Превосходно",),
+            ("роскошно",),
+            ("роскошно!",),
+            ("роскошно@",),
+            ("!роскошно",),
+            ("не роскошно",),
+        ]
+    )
+    def test_item_validator(self, text):
         item_count = models.Item.objects.count()
-        with self.assertRaises(django.core.exceptions.ValidationError):
-            self.item = models.Item(
-                name="Тестовый товар",
-                category=self.category,
-                text="описание",
-            )
-            self.item.full_clean()
-            self.item.save()
-            self.item.tags.add(self.tag)
 
-            self.item = models.Item(
-                name="Тестовый товар хороший",
-                category=self.category,
-                text="роскошное!",
-            )
-            self.item.full_clean()
-            self.item.save()
-            self.item.tags.add(self.tag)
+        item = models.Item(
+            name="Тестовый товар", text=text, category=self.category
+        )
+        item.full_clean()
+        item.save()
+        item.tags.add(self.tag)
 
-            self.assertEqual(models.Item.objects.count(), item_count)
+        self.assertEqual(
+            models.Item.objects.count(),
+            item_count + 1,
+        )
 
-    def test_unable_create_item(self):
+    @parameterized.parameterized.expand(
+        [
+            ("Прев!осходно",),
+            ("роскошный",),
+            ("роскошное!",),
+            ("оскошно@",),
+            ("р оскошно",),
+            ("qwertyроскошно",),
+        ]
+    )
+    def test_item_negative_validator(self, text):
         item_count = models.Item.objects.count()
-        self.item = models.Item(
-            name="Тестовый товар",
-            category=self.category,
-            text="превосходно",
-        )
-        self.item.full_clean()
-        self.item.save()
-        self.item.tags.add(self.tag)
 
-        self.assertEqual(models.Item.objects.count(), item_count + 1)
-
-    def test_unable_create_slug_error(self):
-        tags_count = models.Tag.objects.count()
         with self.assertRaises(django.core.exceptions.ValidationError):
-            self.tag = models.Tag(
-                name="Тестовый тег",
-                slug="описание",
+            item = models.Item(
+                name="Тестовый товар", text=text, category=self.category
             )
-            self.tag.full_clean()
-            self.tag.save()
-            self.tag.add(ModelsTests.tag)
+            item.full_clean()
+            item.save()
 
-            self.assertEqual(models.Tag.objects.count(), tags_count)
-
-    def test_unable_create_slug(self):
-        tags_count = models.Tag.objects.count()
-        self.tag = models.Tag(
-            name="Тестовый тег",
-            slug="aboba",
+        self.assertEqual(
+            models.Item.objects.count(),
+            item_count,
         )
-        self.tag.full_clean()
-        self.tag.save()
 
-        self.assertEqual(models.Tag.objects.count(), tags_count + 1)
-
-    def test_unable_create_category_error_valid(self):
+    @parameterized.parameterized.expand(
+        [
+            (-100,),
+            (0,),
+            (64000,),
+        ]
+    )
+    def test_category_negative_validator(self, weight):
         category_count = models.Category.objects.count()
+
         with self.assertRaises(django.core.exceptions.ValidationError):
-            self.category = models.Category(
-                is_published=True,
+            test_category = models.Category(
                 name="Тестовая категория",
-                slug="cat-slug-test",
-                weight=0,
+                weight=weight,
+                slug="test-cat",
             )
-            self.category.full_clean()
-            self.category.save()
-            self.category.add(ModelsTests.category)
+            test_category.full_clean()
+            test_category.save()
 
-            self.category = models.Category(
-                is_published=True,
-                name="Тестовая категория отличная",
-                slug="slug-test",
-                weight=64000,
-            )
-            self.category.full_clean()
-            self.category.save()
-            self.category.add(ModelsTests.category)
+        self.assertEqual(
+            models.Category.objects.count(),
+            category_count,
+        )
 
-            self.assertEqual(models.Category.objects.count(), category_count)
+    @parameterized.parameterized.expand(
+        [
+            (1,),
+            (100,),
+            (32000,),
+        ]
+    )
+    def test_category_validator(self, weight):
+        category_count = models.Category.objects.count()
+
+        test_category = models.Category(
+            name="Тестовая категория",
+            weight=weight,
+            slug="test-cat",
+        )
+        test_category.full_clean()
+        test_category.save()
+
+        self.assertEqual(
+            models.Category.objects.count(),
+            category_count + 1,
+        )
