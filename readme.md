@@ -5,7 +5,7 @@
 
 ## Активация виртуального окружения
 ```bash 
-python -m venv venv
+python3 -m venv venv
 
 source venv/bin/activate # для linux
 
@@ -16,11 +16,11 @@ venv/Scripts/activate.bat # для windows
 ```bash
 python3 -m pip install --upgrade pip
 
-pip install -r requirements/prod.txt # основные зависимости
+pip3 install -r requirements/prod.txt # основные зависимости
 
-pip install -r requirements/dev.txt # зависимости для разработки
+pip3 install -r requirements/dev.txt # зависимости для разработки
 
-pip install -r requirements/test.txt # зависимости для тестов
+pip3 install -r requirements/test.txt # зависимости для тестов
 ```
 
 ## Бейджик
@@ -28,5 +28,5 @@ pip install -r requirements/test.txt # зависимости для тесто�
 
 ## Запуск сервера
 ```bash
-python manage.py runserver
+python3 manage.py runserver
 ```

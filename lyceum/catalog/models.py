@@ -1,5 +1,7 @@
 import django.core.validators
 import django.db.models
+from django.utils.safestring import mark_safe
+from sorl.thumbnail import get_thumbnail
 
 import catalog.validators
 import core.models
@@ -53,6 +55,31 @@ class Tag(core.models.PublishedWithNameBaseModel):
         return self.name
 
 
+class GalleryImage(django.db.models.Model):
+    item = django.db.models.ForeignKey(
+        "Item",
+        on_delete=django.db.models.CASCADE,
+    )
+
+    image = django.db.models.ImageField(
+        "изображения",
+        upload_to="catalog/",
+        null=True,
+    )
+
+    class Meta:
+        verbose_name = "изображение"
+        verbose_name_plural = "изображения"
+
+    def get_image(self):
+        return get_thumbnail(
+            self.image,
+            "300x300",
+            crop="center",
+            quality=51,
+        )
+
+
 class Item(core.models.PublishedWithNameBaseModel):
     category = django.db.models.ForeignKey(
         Category,
@@ -81,3 +108,36 @@ class Item(core.models.PublishedWithNameBaseModel):
 
     def __str__(self):
         return self.name
+
+
+class ImageModel(django.db.models.Model):
+    item = django.db.models.OneToOneField(
+        Item,
+        on_delete=django.db.models.CASCADE,
+        null=True,
+    )
+    image = django.db.models.ImageField(
+        "главное изображение",
+        upload_to="catalog/",
+        null=True,
+    )
+
+    def get_image(self):
+        return get_thumbnail(
+            self.image,
+            "300x300",
+            quality=51,
+            crop="center",
+        )
+
+    def image_thumbnail(self):
+        if self.image:
+            return mark_safe(f"<img src='{self.image.url}' width='50'>")
+        return "Нет изображения"
+
+    image_thumbnail.short_description = "превью"
+    image_thumbnail.allow_tags = True
+
+    class Meta:
+        default_related_name = "main_image"
+        verbose_name = "главное изображение"

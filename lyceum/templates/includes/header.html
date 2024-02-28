@@ -1,0 +1,32 @@
+<header>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+  <div class="row">
+    <img class="col-1" src="{% static 'img/logotype.png' %}" width="80">
+    {% with request.resolver_match.view_name as view_name %}
+    <div class="col-6">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link {% if view_name == 'homepage:main' %}active{% endif %}" href="{% url 'homepage:main' %}">
+            На главную
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name == 'about:about' %}active{% endif %}" href="{% url 'about:about' %}">
+            О проекте
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name == 'catalog:item_list' %}active{% endif %}" href="{% url 'catalog:item_list' %}">
+            Каталог
+          </a>
+        </li>
+      </ul>
+    </div>
+    {% endwith %}
+  </div>
+
+
+
+</header>

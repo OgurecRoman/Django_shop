@@ -3,7 +3,7 @@ stages:
   - test
 
 before_script:
-  - pip install --upgrade pip
+  - pip3 install --upgrade pip
   - pip3 install -r requirements/prod.txt
   - pip3 install -r requirements/dev.txt
   - pip3 install -r requirements/test.txt
@@ -12,9 +12,9 @@ flake8:
   stage: linting
   image: registry.gitlab.com/pipeline-components/flake8:latest
   script:
-    - pip install pep8-naming flake8-import-order flake8-quotes flake8-absolute-import flake8-builtins
-    - pip install flake8-commas flake8-comments flake8-comprehensions flake8-eradicate
-    - pip install flake8-fixme flake8-print flake8-type-ignore
+    - pip3 install pep8-naming flake8-import-order flake8-quotes flake8-absolute-import flake8-builtins
+    - pip3 install flake8-commas flake8-comments flake8-comprehensions flake8-eradicate
+    - pip3 install flake8-fixme flake8-print flake8-type-ignore
     - flake8 lyceum
 
 black:

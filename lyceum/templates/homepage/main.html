@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% load static %}
+  <h1>Это главная страница.</h1>
+  <img src="{% static 'img/cat_buy.png' %}">
+
+  <blockquote>
+    <p>Совершайте покупки и вы будете счастливы</p>
+    <footer>—Кот</footer>
+  </blockquote>
+
+{% endblock %}
