@@ -65,7 +65,12 @@ class Item(core.models.PublishedWithNameBaseModel):
     )
     text = django.db.models.TextField(
         "описание",
-        validators=[catalog.validators.validate_brilliant],
+        validators=[
+            catalog.validators.WordsValidator(
+                "превосходно",
+                "роскошно",
+            ),
+        ],
         help_text="Введите описание объекта",
     )
 
