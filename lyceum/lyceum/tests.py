@@ -19,3 +19,8 @@ class CatalogStaticURLTests(TestCase):
             contents.append(response.content.decode("utf-8"))
         self.assertIn("Я чайник", contents)
         self.assertNotIn("Я кинйач", contents)
+
+
+__all__ = [
+    CatalogStaticURLTests,
+]

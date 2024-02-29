@@ -6,3 +6,8 @@ class MyConverter:
 
     def to_url(self, value) -> str:
         return f"{value}"
+
+
+__all__ = [
+    MyConverter,
+]

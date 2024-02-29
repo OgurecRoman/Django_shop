@@ -38,3 +38,8 @@ class ReverseMiddleware:
 
         response.content = "".join(transformed).encode()
         return response
+
+
+__all__ = [
+    ReverseMiddleware,
+]

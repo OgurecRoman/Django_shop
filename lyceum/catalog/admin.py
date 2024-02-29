@@ -11,7 +11,7 @@ class GalleryImageInline(admin.TabularInline):
 
 
 class MainImageInline(admin.TabularInline):
-    model = catalog.models.ImageModel
+    model = catalog.models.MainImage
     can_delete = True
 
 
@@ -23,9 +23,9 @@ class ItemAdmin(admin.ModelAdmin):
     ]
 
     list_display = (
+        "get_image",
         catalog.models.Item.name.field.name,
         catalog.models.Item.is_published.field.name,
-        "get_image",
     )
 
     list_editable = (catalog.models.Item.is_published.field.name,)
@@ -35,3 +35,10 @@ class ItemAdmin(admin.ModelAdmin):
     @admin.display(ordering="main_image", description="Главное изображение")
     def get_image(self, obj):
         return obj.main_image.image_thumbnail()
+
+
+__all__ = [
+    GalleryImageInline,
+    MainImageInline,
+    ItemAdmin,
+]

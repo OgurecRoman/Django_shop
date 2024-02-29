@@ -149,3 +149,8 @@ class ModelsTests(django.test.TestCase):
             catalog.models.Category.objects.count(),
             category_count,
         )
+
+
+__all__ = [
+    ModelsTests,
+]

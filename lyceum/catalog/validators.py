@@ -18,3 +18,8 @@ class WordsValidator:
             raise django.core.exceptions.ValidationError(
                 f"В тексте {value} нет слов: {self.joined_words}",
             )
+
+
+__all__ = [
+    WordsValidator,
+]

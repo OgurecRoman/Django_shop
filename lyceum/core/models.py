@@ -57,3 +57,8 @@ class PublishedWithNameBaseModel(django.db.models.Model):
 
     class Meta:
         abstract = True
+
+
+__all__ = [
+    PublishedWithNameBaseModel,
+]

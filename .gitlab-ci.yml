@@ -14,7 +14,7 @@ flake8:
   script:
     - pip3 install pep8-naming flake8-import-order flake8-quotes flake8-absolute-import flake8-builtins
     - pip3 install flake8-commas flake8-comments flake8-comprehensions flake8-eradicate
-    - pip3 install flake8-fixme flake8-print flake8-type-ignore
+    - pip3 install flake8-fixme flake8-dunder-all flake8-print flake8-type-ignore
     - flake8 lyceum
 
 black:

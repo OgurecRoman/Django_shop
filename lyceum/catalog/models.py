@@ -30,7 +30,7 @@ class Category(core.models.PublishedWithNameBaseModel):
     )
 
     class Meta:
-        ordering = ("weight", "id")
+        default_related_name = "categories"
         verbose_name = "категория"
         verbose_name_plural = "категории"
 
@@ -46,7 +46,6 @@ class Tag(core.models.PublishedWithNameBaseModel):
     )
 
     class Meta:
-        ordering = ("slug",)
         verbose_name = "тег"
         verbose_name_plural = "теги"
         default_related_name = "tags"
@@ -85,10 +84,12 @@ class Item(core.models.PublishedWithNameBaseModel):
         Category,
         on_delete=django.db.models.CASCADE,
         verbose_name="категория",
+        related_name="items",
         help_text="Выберите категорию",
     )
     tags = django.db.models.ManyToManyField(
         Tag,
+        related_name="tags",
     )
     text = django.db.models.TextField(
         "описание",
@@ -110,7 +111,7 @@ class Item(core.models.PublishedWithNameBaseModel):
         return self.name
 
 
-class ImageModel(django.db.models.Model):
+class MainImage(django.db.models.Model):
     item = django.db.models.OneToOneField(
         Item,
         on_delete=django.db.models.CASCADE,
@@ -141,3 +142,12 @@ class ImageModel(django.db.models.Model):
     class Meta:
         default_related_name = "main_image"
         verbose_name = "главное изображение"
+
+
+__all__ = [
+    Category,
+    Tag,
+    GalleryImage,
+    Item,
+    MainImage,
+]
