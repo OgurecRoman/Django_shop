@@ -18,7 +18,9 @@ class Migration(migrations.Migration):
             field=tinymce.models.HTMLField(
                 help_text="Введите описание объекта",
                 validators=[
-                    catalog.validators.WordsValidator("превосходно", "роскошно")
+                    catalog.validators.WordsValidator(
+                        "превосходно", "роскошно"
+                    )
                 ],
                 verbose_name="описание",
             ),

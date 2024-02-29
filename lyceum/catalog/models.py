@@ -96,8 +96,9 @@ class Item(core.models.PublishedWithNameBaseModel):
         "описание",
         validators=[
             catalog.validators.WordsValidator(
-                "превосходно", "роскошно",
-            )
+                "превосходно",
+                "роскошно",
+            ),
         ],
         help_text="Введите описание объекта",
     )
