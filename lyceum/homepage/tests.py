@@ -1,11 +1,12 @@
 from http import HTTPStatus
 
 from django.test import Client, TestCase
+import django.urls
 
 
 class HomepageStaticURLTests(TestCase):
     def test_homepage_endpoint(self):
-        response = Client().get("/")
+        response = Client().get(django.urls.reverse("homepage:main"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_coffee_endpoint(self):

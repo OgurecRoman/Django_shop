@@ -4,12 +4,13 @@ import itertools
 import django.core.exceptions
 import django.test
 from django.test import Client, TestCase
+import django.urls
 import parameterized
 
 
 class CatalogStaticURLTests(TestCase):
     def test_catalog_endpoint(self):
-        response = Client().get("/catalog/")
+        response = Client().get(django.urls.reverse("catalog:item_list"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     @parameterized.parameterized.expand(
