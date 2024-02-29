@@ -2,6 +2,7 @@ import django.core.validators
 import django.db.models
 from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
+from tinymce.models import HTMLField
 
 import catalog.validators
 import core.models
@@ -91,13 +92,12 @@ class Item(core.models.PublishedWithNameBaseModel):
         Tag,
         related_name="tags",
     )
-    text = django.db.models.TextField(
+    text = HTMLField(
         "описание",
         validators=[
             catalog.validators.WordsValidator(
-                "превосходно",
-                "роскошно",
-            ),
+                "превосходно", "роскошно",
+            )
         ],
         help_text="Введите описание объекта",
     )
