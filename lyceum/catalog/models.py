@@ -144,10 +144,4 @@ class MainImage(django.db.models.Model):
         verbose_name = "главное изображение"
 
 
-__all__ = [
-    Category,
-    Tag,
-    GalleryImage,
-    Item,
-    MainImage,
-]
+__all__ = []

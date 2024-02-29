@@ -40,6 +40,4 @@ class ReverseMiddleware:
         return response
 
 
-__all__ = [
-    ReverseMiddleware,
-]
+__all__ = []

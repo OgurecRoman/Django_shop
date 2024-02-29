@@ -20,6 +20,4 @@ class WordsValidator:
             )
 
 
-__all__ = [
-    WordsValidator,
-]
+__all__ = []

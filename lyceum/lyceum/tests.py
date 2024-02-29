@@ -21,6 +21,4 @@ class CatalogStaticURLTests(TestCase):
         self.assertNotIn("Я кинйач", contents)
 
 
-__all__ = [
-    CatalogStaticURLTests,
-]
+__all__ = []

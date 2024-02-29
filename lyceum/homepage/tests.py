@@ -17,6 +17,4 @@ class HomepageStaticURLTests(TestCase):
         self.assertEqual(response.content.decode("utf-8"), "Я чайник")
 
 
-__all__ = [
-    HomepageStaticURLTests,
-]
+__all__ = []

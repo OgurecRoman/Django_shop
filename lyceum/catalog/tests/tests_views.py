@@ -1,21 +1,21 @@
 from http import HTTPStatus
 
 from django.test import Client, TestCase
-from django.urls import reverse
+import django.urls
 
 
 class CatalogViewsTests(TestCase):
     def test_catalog_endpoint(self):
-        reverse("catalog:item_list")
-        response = Client().get("/catalog/")
+        response = Client().get(django.urls.reverse("catalog:item_list"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_catalog_endpoint_1(self):
-        reverse("catalog:item", args=[1])
-        response = Client().get("/catalog/1/")
+        response = Client().get(django.urls.reverse("catalog:item", args=[1]))
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+    def test_about_endpoint_1(self):
+        response = Client().get(django.urls.reverse("about:about"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
 
-__all__ = [
-    CatalogViewsTests,
-]
+__all__ = []

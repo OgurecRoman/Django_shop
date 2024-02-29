@@ -8,6 +8,4 @@ class MyConverter:
         return f"{value}"
 
 
-__all__ = [
-    MyConverter,
-]
+__all__ = []

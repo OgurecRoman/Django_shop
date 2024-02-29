@@ -1,6 +1,6 @@
 Django==4.2
 python-dotenv==1.0.1
 transliterate==1.10.2
-pillow==10.2.0
 django-cleanup==8.1.0
 sorl-thumbnail==12.10.0
+django_debug_toolbar==3.8.1

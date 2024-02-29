@@ -37,8 +37,4 @@ class ItemAdmin(admin.ModelAdmin):
         return obj.main_image.image_thumbnail()
 
 
-__all__ = [
-    GalleryImageInline,
-    MainImageInline,
-    ItemAdmin,
-]
+__all__ = []

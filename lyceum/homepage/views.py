@@ -14,7 +14,4 @@ def coffee(request):
     return HttpResponse("Я чайник", status=http.HTTPStatus.IM_A_TEAPOT)
 
 
-__all__ = [
-    home,
-    coffee,
-]
+__all__ = []

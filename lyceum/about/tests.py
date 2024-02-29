@@ -9,6 +9,4 @@ class AboutStaticURLTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
 
-__all__ = [
-    AboutStaticURLTests,
-]
+__all__ = []

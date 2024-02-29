@@ -63,6 +63,4 @@ class CatalogStaticURLTests(TestCase):
         self.assertEqual(response.status_code, expected_status)
 
 
-__all__ = [
-    CatalogStaticURLTests,
-]
+__all__ = []

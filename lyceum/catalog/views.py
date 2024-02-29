@@ -18,8 +18,4 @@ def re_item(request, pk):
     return HttpResponse(pk)
 
 
-__all__ = [
-    item_list,
-    item_detail,
-    re_item,
-]
+__all__ = []

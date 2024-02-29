@@ -59,6 +59,4 @@ class PublishedWithNameBaseModel(django.db.models.Model):
         abstract = True
 
 
-__all__ = [
-    PublishedWithNameBaseModel,
-]
+__all__ = []

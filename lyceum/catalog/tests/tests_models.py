@@ -151,6 +151,4 @@ class ModelsTests(django.test.TestCase):
         )
 
 
-__all__ = [
-    ModelsTests,
-]
+__all__ = []
