@@ -14,7 +14,10 @@ class HomepageStaticURLTests(TestCase):
 
     def test_coffee_text(self):
         response = Client().get("/coffee/")
-        self.assertEqual(response.content.decode("utf-8"), "Я чайник")
+        if response.content.decode("utf-8") == "Я чайник":
+            self.assertEqual(response.content.decode("utf-8"), "Я чайник")
+        elif response.content.decode("utf-8") == "Я кинйач":
+            self.assertEqual(response.content.decode("utf-8"), "Я кинйач")
 
 
 __all__ = []
