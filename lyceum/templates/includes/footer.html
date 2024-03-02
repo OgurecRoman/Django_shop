@@ -1,4 +1,19 @@
-<footer>
+<footer class="border-top text-center py-3">
+
   <h5>Контактная информация</h5>
   <p>Мяу мяу</p>
+  <p><span id="year">{% now "Y" %}</span></p>
+
+  <script>
+    var dateStr = "{% now "Y-m-d" %}T{% now "H:i:s" %}Z";
+    var serDate = Date.parse(dateStr);
+    var now = Date.now();
+    var diffTime = Math.abs(serDate - now);
+    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    var date = new Date(diffDays < 1 ? now : serDate);
+
+    $("#year").text(date.getFullYear());
+  </script>
+
 </footer>

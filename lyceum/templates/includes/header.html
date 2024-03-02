@@ -1,24 +1,29 @@
-<header>
-  {% load static %}
+{% load static %}
+{% load i18n %}
+<header class="site-header">
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <div class="row">
-    <img class="col-1" src="{% static 'img/logotype.png' %}" width="80">
+    <a class="col-1" href="{% url 'homepage:main' %}">
+      <img src="{% static 'img/logotype.png' %}" width="80">
+    </a>
+
     {% with request.resolver_match.view_name as view_name %}
-    <div class="col-6">
+    <div class="col-6 right">
       <ul class="nav nav-pills">
         <li class="nav-item">
           <a class="nav-link {% if view_name == 'homepage:main' %}active{% endif %}" href="{% url 'homepage:main' %}">
-            На главную
+            {% trans "На главную" %}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if view_name == 'about:about' %}active{% endif %}" href="{% url 'about:about' %}">
-            О проекте
+            {% trans "О проекте" %}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if view_name == 'catalog:item_list' %}active{% endif %}" href="{% url 'catalog:item_list' %}">
-            Список товаров
+          <a class="nav-link {% if view_name == 'catalog:item_list' %}active{% endif %}"
+             href="{% url 'catalog:item_list' %}">
+            {% trans "Список товаров" %}
           </a>
         </li>
       </ul>
