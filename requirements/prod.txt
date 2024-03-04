@@ -5,4 +5,3 @@ django-cleanup==8.1.0
 sorl-thumbnail==12.10.0
 pillow==10.2.0
 django-tinymce==3.7.1
-django_debug_toolbar==4.3.0
