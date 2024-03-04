@@ -1,5 +1,11 @@
-Перед началом работы откройте файл example.env, поменяйте значения переменных
-при необходимости и сохраните этот файл под названием ".env"
+## Создание .env файла
+```bash
+cd lyceum # перевод в нужную директорию
+```
+```bash
+copy example.env .env # копирование файла с примером в нужный
+```
+Поменяйте значения переменных при необходимости
 
 ## Структура базы данных
 ![alt text](ER.jpg)
@@ -34,10 +40,10 @@ pip3 install -r requirements/test.txt # зависимости для тесто
 
 ## Динамический перевод
 ```bash
-python manage.py makemessages -l en # сохранить
+django-admin makemessages -l en # сохранить
 ```
 ```bash
-python manage.py compilemessages -l en # компилируем
+django-admin compilemessages -l en # компилируем
 ```
 
 ## Бейджик

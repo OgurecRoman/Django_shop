@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -105,8 +106,8 @@ if DEBUG:
     INTERNAL_IPS = ["127.0.0.1", "localhost"]
 
 LANGUAGES = [
-    ("en", ("English")),
-    ("ru", ("Русский")),
+    ("en", _("English")),
+    ("ru", _("Русский")),
 ]
 
 LOCALE_PATHS = (BASE_DIR / "locale",)
