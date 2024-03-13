@@ -4,7 +4,7 @@
   </a>
   <div class="card-body">
     <a href="{% url 'catalog:item' item.id %}"><h5 class="card-title">{{ item.name }}</h5></a>
-    <p class="card-text">{{ item.text|striptags|truncatewords:10 }}</p>
+    <p class="card-text">{{ item.text|truncatewords_html:10|striptags }}</p>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">Категория: {{ item.category.name }}</li>
