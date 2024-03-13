@@ -1,131 +1,254 @@
 [
 {
     "model": "catalog.category",
-    "pk": 1,
+    "pk": 5,
     "fields": {
-        "name": "cat1",
+        "name": "Коты",
         "is_published": true,
-        "canonical_name": "cat1",
-        "slug": "slug1",
+        "canonical_name": "koty",
+        "slug": "cats",
         "weight": 100
     }
 },
 {
     "model": "catalog.category",
-    "pk": 2,
+    "pk": 6,
     "fields": {
-        "name": "cat2",
+        "name": "Собаки",
         "is_published": true,
-        "canonical_name": "cat2",
-        "slug": "slug2",
-        "weight": 156
+        "canonical_name": "sobaki",
+        "slug": "dogs",
+        "weight": 100
     }
 },
 {
     "model": "catalog.category",
-    "pk": 3,
+    "pk": 7,
     "fields": {
-        "name": "cat3",
+        "name": "Птицы",
         "is_published": true,
-        "canonical_name": "cat3",
-        "slug": "slug3",
-        "weight": 5647
+        "canonical_name": "ptitsy",
+        "slug": "birds",
+        "weight": 100
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 8,
+    "fields": {
+        "name": "Грызуны",
+        "is_published": true,
+        "canonical_name": "gryzuny",
+        "slug": "rodents",
+        "weight": 100
     }
 },
 {
     "model": "catalog.tag",
+    "pk": 7,
+    "fields": {
+        "name": "Игрушки",
+        "is_published": true,
+        "canonical_name": "igrushki",
+        "slug": "games"
+    }
+},
+{
+    "model": "catalog.tag",
+    "pk": 8,
+    "fields": {
+        "name": "Корм",
+        "is_published": true,
+        "canonical_name": "korm",
+        "slug": "food"
+    }
+},
+{
+    "model": "catalog.tag",
+    "pk": 9,
+    "fields": {
+        "name": "Грызуны",
+        "is_published": true,
+        "canonical_name": "gryzuny",
+        "slug": "rodents"
+    }
+},
+{
+    "model": "catalog.tag",
+    "pk": 10,
+    "fields": {
+        "name": "Дешевое",
+        "is_published": true,
+        "canonical_name": "deshevoe",
+        "slug": "cheap"
+    }
+},
+{
+    "model": "catalog.tag",
+    "pk": 11,
+    "fields": {
+        "name": "Домики",
+        "is_published": true,
+        "canonical_name": "domiki",
+        "slug": "homes"
+    }
+},
+{
+    "model": "catalog.item",
     "pk": 1,
     "fields": {
-        "name": "tag1",
+        "name": "Whiskas",
         "is_published": true,
-        "canonical_name": "tag1",
-        "slug": "slug1"
+        "canonical_name": "whiskas",
+        "category": 5,
+        "text": "<p>Ваши любимые котики будут чувствовать себя превосходно!</p>",
+        "is_on_main": false,
+        "tags": [
+            8
+        ]
     }
 },
 {
-    "model": "catalog.tag",
+    "model": "catalog.item",
     "pk": 2,
     "fields": {
-        "name": "tag2",
+        "name": "Мячик",
         "is_published": true,
-        "canonical_name": "tag2",
-        "slug": "slug2"
+        "canonical_name": "mjachik",
+        "category": 6,
+        "text": "<p>Игрушка выглядит роскошно)</p>",
+        "is_on_main": true,
+        "tags": [
+            10,
+            7
+        ]
     }
 },
 {
-    "model": "catalog.tag",
+    "model": "catalog.item",
     "pk": 3,
     "fields": {
-        "name": "tag3",
+        "name": "Мостик для хомяков",
         "is_published": true,
-        "canonical_name": "tag3",
-        "slug": "slug3"
+        "canonical_name": "mostikdljahomjakov",
+        "category": 8,
+        "text": "<p>Подари своему любимцу превосходно сделанный мостик в его домик.</p>\r\n<p>Хомячок будет <strong>счастлив</strong>.</p>",
+        "is_on_main": true,
+        "tags": [
+            7,
+            11,
+            9
+        ]
     }
 },
 {
-    "model": "catalog.tag",
+    "model": "catalog.item",
     "pk": 4,
     "fields": {
-        "name": "tag4",
-        "is_published": true,
-        "canonical_name": "tag4",
-        "slug": "slug4"
+        "name": "Корм для хомяков",
+        "is_published": false,
+        "canonical_name": "kormdljahomjakov",
+        "category": 8,
+        "text": "<p>Животные чувствуют себя просто превосходно!</p>",
+        "is_on_main": true,
+        "tags": [
+            8,
+            9
+        ]
     }
 },
 {
-    "model": "catalog.tag",
+    "model": "catalog.item",
     "pk": 5,
     "fields": {
-        "name": "tag5",
+        "name": "Игрушка для котов мыши",
         "is_published": true,
-        "canonical_name": "tag5",
-        "slug": "slug5"
-    }
-},
-{
-    "model": "catalog.item",
-    "pk": 2,
-    "fields": {
-        "name": "name1",
-        "is_published": true,
-        "canonical_name": "name1",
-        "category": 3,
-        "text": "превосходно",
+        "canonical_name": "igrushkadljakotovmyshi",
+        "category": 5,
+        "text": "<p>мыши в доме это всегда роскошно</p>",
+        "is_on_main": false,
         "tags": [
-            3,
-            4
+            7
         ]
     }
 },
 {
     "model": "catalog.item",
-    "pk": 4,
+    "pk": 6,
     "fields": {
-        "name": "name_new",
+        "name": "Клетка для птиц",
         "is_published": true,
-        "canonical_name": "name_new",
-        "category": 2,
-        "text": "превосходно",
+        "canonical_name": "kletkadljaptits",
+        "category": 7,
+        "text": "<p>это место жительства очень роскошно</p>",
+        "is_on_main": false,
         "tags": [
-            4,
-            5
+            11
         ]
+    }
+},
+{
+    "model": "catalog.mainimage",
+    "pk": 1,
+    "fields": {
+        "image": "catalog/1/whiskas.png",
+        "item": 1
     }
 },
 {
     "model": "catalog.mainimage",
     "pk": 2,
     "fields": {
-        "item": 2,
-        "image": "catalog/whiskas.png"
+        "image": "catalog/2/ball.jpg",
+        "item": 2
+    }
+},
+{
+    "model": "catalog.mainimage",
+    "pk": 3,
+    "fields": {
+        "image": "catalog/3/6029586383.jpg",
+        "item": 3
     }
 },
 {
     "model": "catalog.mainimage",
     "pk": 4,
     "fields": {
-        "item": 4,
-        "image": "catalog/logotype.png"
+        "image": "catalog/4/1609557176.jpg",
+        "item": 4
+    }
+},
+{
+    "model": "catalog.mainimage",
+    "pk": 5,
+    "fields": {
+        "image": "catalog/5/100039726355b0.jpg",
+        "item": 5
+    }
+},
+{
+    "model": "catalog.mainimage",
+    "pk": 6,
+    "fields": {
+        "image": "catalog/6/6017672725.jpg",
+        "item": 6
+    }
+},
+{
+    "model": "catalog.image",
+    "pk": 1,
+    "fields": {
+        "image": "catalog/5/post_5af49b65a2df1.jpg",
+        "item": 5
+    }
+},
+{
+    "model": "catalog.image",
+    "pk": 2,
+    "fields": {
+        "image": "catalog/5/65df90ad54b6efd6632a.jpg",
+        "item": 5
     }
 }
 ]

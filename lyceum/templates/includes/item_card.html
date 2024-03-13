@@ -1,0 +1,16 @@
+<div class="card" style="width: 18rem;">
+  <a href="{% url 'catalog:item' item.id %}">
+    <img src="{{ item.main_image.get_image_300x300.url }}" class="card-img-top" alt="">
+  </a>
+  <div class="card-body">
+    <a href="{% url 'catalog:item' item.id %}"><h5 class="card-title">{{ item.name }}</h5></a>
+    <p class="card-text">{{ item.text|striptags|truncatewords:10 }}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Категория: {{ item.category.name }}</li>
+    <li class="list-group-item">Теги:
+      {% for tag in item.tags.all %}
+        <div> {{ tag.name }}</div>
+      {% endfor %}</li>
+  </ul>
+</div>

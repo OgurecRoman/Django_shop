@@ -1,9 +1,26 @@
 {% extends "base.html" %}
-{% load static %}
 
 {% block content %}
-  <h1>Подробно элемент {{ pk }}</h1>
-  <h2>Whiskas</h2>
-  <img src="{% static 'img/whiskas.png' %}" width="300"/>
+  <h1>Подробно элемент {{ item.id }}</h1>
+<div>
+  <h2>{{ item.name }}</h2>
+  <div>
+    <img src="{{ item.main_image.get_image_300x300.url }}" width="300"/>
+    <p>{{ item.text|striptags }}</p>
+  </div>
+  <h5>Категория:</h5>
+  <p>{{ item.category }}</p>
+  <h5>Теги:</h5>
+  {% for tag in item.tags.all %}
+  <p>{{ tag.name }}</p>
+  {% endfor %}
+
+  {% if item.images.all %}
+  <h5>Галерея:</h5>
+  {% for image in item.images.all %}
+  <img src="{{ image.get_image_300x300.url }}" width="300"/>
+  {% endfor %}
+  {% endif %}
+</div>
 
 {% endblock %}

@@ -3,6 +3,10 @@
 {% block content %}
   <h1>Список товаров</h1>
 
-  {% include "./includes/card.html" %}
+  <div class="row">
+    {% for item in items %}
+      {% include "../includes/item_card.html" %}
+    {% endfor %}
+  </div>
 
 {% endblock %}

@@ -9,10 +9,6 @@ class CatalogViewsTests(TestCase):
         response = Client().get(django.urls.reverse("catalog:item_list"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
-    def test_catalog_endpoint_1(self):
-        response = Client().get(django.urls.reverse("catalog:item", args=[1]))
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-
     def test_about_endpoint_1(self):
         response = Client().get(django.urls.reverse("about:about"))
         self.assertEqual(response.status_code, HTTPStatus.OK)

@@ -9,6 +9,8 @@ import parameterized
 
 
 class CatalogStaticURLTests(TestCase):
+    fixtures = ["fixtures/data.json"]
+
     def test_catalog_endpoint(self):
         response = Client().get(django.urls.reverse("catalog:item_list"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -16,8 +18,8 @@ class CatalogStaticURLTests(TestCase):
     @parameterized.parameterized.expand(
         [
             ("1", HTTPStatus.OK),
-            ("100", HTTPStatus.OK),
-            ("0", HTTPStatus.OK),
+            ("3", HTTPStatus.OK),
+            ("0", HTTPStatus.NOT_FOUND),
             ("-0", HTTPStatus.NOT_FOUND),
             ("-100", HTTPStatus.NOT_FOUND),
             ("0.5", HTTPStatus.NOT_FOUND),
@@ -43,6 +45,7 @@ class CatalogStaticURLTests(TestCase):
                     ],
                     [
                         ("1", HTTPStatus.OK),
+                        ("3", HTTPStatus.OK),
                         ("100", HTTPStatus.OK),
                         ("0", HTTPStatus.NOT_FOUND),
                         ("-0", HTTPStatus.NOT_FOUND),
