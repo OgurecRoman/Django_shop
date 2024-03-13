@@ -63,7 +63,57 @@ class Tag(core.models.PublishedWithNameBaseModel):
         return self.name
 
 
+class Itemmanager(django.db.models.Manager):
+    def published(self):
+        return (
+            self.get_queryset()
+            .filter(
+                is_published=True,
+                category__is_published=True,
+            )
+            .order_by(
+                f"{Item.category.field.name}__{Category.name.field.name}",
+                Item.name.field.name,
+                Item.name.field.name,
+            )
+            .select_related(
+                Item.category.field.name,
+                Item.main_image.related.name,
+            )
+            .prefetch_related(
+                django.db.models.Prefetch(
+                    Item.tags.field.name,
+                    queryset=Tag.objects.filter(
+                        is_published=True,
+                    ).only(
+                        Tag.name.field.name,
+                    ),
+                ),
+            )
+            .only(
+                Item.name.field.name,
+                Item.text.field.name,
+                Item.main_image.related.name,
+                f"{Item.category.field.name}__{Category.name.field.name}",
+                f"{Item.tags.field.name}__{Tag.name.field.name}",
+            )
+        )
+
+    def on_main(self):
+        return (
+            self.published()
+            .filter(
+                is_on_main=True,
+            )
+            .order_by(
+                Item.name.field.name,
+            )
+        )
+
+
 class Item(core.models.PublishedWithNameBaseModel):
+    objects = Itemmanager()
+
     category = django.db.models.ForeignKey(
         Category,
         on_delete=django.db.models.CASCADE,
