@@ -1,4 +1,4 @@
-python-dotenv==0.21.1
+-r dev.txt
 flake8==7.0.0
 parameterized==0.9.0
 flake8-absolute-import==1.0.0.2
