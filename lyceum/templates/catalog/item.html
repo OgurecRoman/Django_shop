@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Подробно элемент {{ item.id }}</h1>
+<h1>Подробно элемент {{ item.id }}</h1>
 <div>
   <h2>{{ item.name }}</h2>
   <div>
@@ -18,7 +18,18 @@
   {% if item.images.all %}
   <h5>Галерея:</h5>
   {% for image in item.images.all %}
-  <img src="{{ image.get_image_300x300.url }}" width="300"/>
+  <div class="text-center">
+    <img src="{{ image.get_image_300x300.url }}" width="300"/>
+    <div class="container">
+      <div class="carousel-caption text-start">
+        <p>
+          <a href="{% url 'download:file' image.image %}" class="btn btn-lg btn-primary">
+            Скачать изображение
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
   {% endfor %}
   {% endif %}
 </div>

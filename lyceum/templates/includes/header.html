@@ -8,7 +8,7 @@
     </a>
 
     {% with request.resolver_match.view_name as view_name %}
-    <div class="col-6 right">
+    <div class="col-8 right">
       <ul class="nav nav-pills">
         <li class="nav-item">
           <a class="nav-link {% if view_name == 'homepage:main' %}active{% endif %}" href="{% url 'homepage:main' %}">
@@ -26,6 +26,31 @@
             {% trans "Список товаров" %}
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name == 'catalog:new' %}active{% endif %}"
+             href="{% url 'catalog:new' %}">
+            {% trans "Новинки" %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name == 'catalog:friday' %}active{% endif %}"
+             href="{% url 'catalog:friday' %}">
+            {% trans "Пятница" %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name == 'catalog:unverified' %}active{% endif %}"
+             href="{% url 'catalog:unverified' %}">
+            {% trans "Непроверенное" %}
+          </a>
+        </li>
+        {% if request.user.is_superuser %}
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin:index' %}">
+              {% trans "Админка" %}
+            </a>
+          </li>
+        {% endif %}
       </ul>
     </div>
     {% endwith %}

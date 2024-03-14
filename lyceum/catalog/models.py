@@ -74,7 +74,6 @@ class Itemmanager(django.db.models.Manager):
             .order_by(
                 f"{Item.category.field.name}__{Category.name.field.name}",
                 Item.name.field.name,
-                Item.name.field.name,
             )
             .select_related(
                 Item.category.field.name,
@@ -134,6 +133,18 @@ class Item(core.models.PublishedWithNameBaseModel):
     )
 
     is_on_main = django.db.models.BooleanField(default="False")
+
+    created = django.db.models.DateTimeField(
+        "время создания",
+        auto_now_add=True,
+        null=True,
+    )
+
+    updated = django.db.models.DateTimeField(
+        "время изменения",
+        auto_now=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "товар"
