@@ -155,7 +155,7 @@ class Item(core.models.PublishedWithNameBaseModel):
             ),
         ],
         help_text="Описание должно содержать слова "
-                  "'превосходно' или 'роскошно'.",
+        "'превосходно' или 'роскошно'.",
     )
 
     is_on_main = django.db.models.BooleanField(default="False")
@@ -228,7 +228,7 @@ class MainImage(ImageBaseModel):
         on_delete=django.db.models.CASCADE,
         related_name="main_image",
         help_text="Главное изображение товара "
-                  "(будет отображаться в списке товаров)",
+        "(будет отображаться в списке товаров)",
     )
 
     class Meta:

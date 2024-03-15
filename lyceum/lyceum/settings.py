@@ -25,25 +25,22 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
 ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", True)
 
-# DJANGO_MAIL = os.getenv("DJANGO_MAIL", "aboba@main.ru")
+DJANGO_MAIL = os.getenv("DJANGO_MAIL", "aboba@main.ru")
 # Application definition
 
 INSTALLED_APPS = [
-    # django apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # third-party applications
     "sorl.thumbnail",
     "tinymce",
-    # my apps
     "about.apps.AboutConfig",
     "catalog.apps.CatalogConfig",
     "download.apps.DownloadConfig",
-    # "feedback.apps.FeedbackConfig",
+    "feedback.apps.FeedbackConfig",
     "homepage.apps.HomepageConfig",
     "django_cleanup.apps.CleanupConfig",
 ]
@@ -136,7 +133,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-# EMAIL_FILE_PATH = BASE_DIR / "sent_email"
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "sent_email"
 
 __all__ = []

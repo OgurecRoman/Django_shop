@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% csrf_token %}
+
+{% block content %}
+
+<form method="post" action="куда отправлять" enctype="multipart/form-data">
+  <ul>
+    {{ form.as_ul }}
+    <li class="button">
+      <button type="submit">Отправить</button>
+    </li>
+  </ul>
+</form>
+
+{% endblock %}
