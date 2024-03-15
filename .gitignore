@@ -8,7 +8,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-.vscode/
 build/
 develop-eggs/
 dist/
@@ -96,9 +95,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
-.venv
-.idea/
+venv
 env/
 venv/
 ENV/
@@ -128,3 +125,10 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# IDE
+.vscode/
+.idea/
+
+# Environment variables
+.env

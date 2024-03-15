@@ -1,7 +1,6 @@
 import datetime
 import random
 
-from django.db.models import Prefetch
 from django.http import HttpResponse
 import django.shortcuts
 
@@ -45,22 +44,9 @@ def friday(request):
 
 def unverified(request):
     template = "catalog/special.html"
-    items = (
-        catalog.models.Item.objects.on_main()
-        .filter(
-            created__gte=django.db.models.F(
-                catalog.models.Item.updated.field.name,
-            )
-            - datetime.timedelta(seconds=1),
-            created__lte=django.db.models.F(
-                catalog.models.Item.updated.field.name,
-            )
-            + datetime.timedelta(seconds=1),
-        )
-        .order_by(
-            "?",
-        )[:5]
-    )
+    items = catalog.models.Item.objects.date().order_by(
+        "?",
+    )[:5]
 
     context = {"items": items, "name": "Непроверенное"}
     return django.shortcuts.render(request, template, context)
@@ -75,15 +61,7 @@ def item_list(request):
 
 def item_detail(request, pk):
     template = "catalog/item.html"
-    queryset = catalog.models.Item.objects.published().prefetch_related(
-        Prefetch(
-            catalog.models.Item.images.field.related_query_name(),
-            queryset=catalog.models.Image.objects.only(
-                catalog.models.Image.image.field.name,
-                catalog.models.Image.item_id.field.name,
-            ),
-        ),
-    )
+    queryset = catalog.models.Item.objects.published()
 
     item = django.shortcuts.get_object_or_404(queryset, pk=pk)
     context = {"item": item}

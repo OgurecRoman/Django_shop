@@ -5,7 +5,7 @@
 <div>
   <h2>{{ item.name }}</h2>
   <div>
-    <img src="{{ item.main_image.get_image_300x300.url }}" width="300"/>
+    <img src="{{ item.main_image.get_image_300x300.url }}" width="300" alt=""/>
     <p>{{ item.text|striptags }}</p>
   </div>
   <h5>Категория:</h5>
@@ -19,7 +19,7 @@
   <h5>Галерея:</h5>
   {% for image in item.images.all %}
   <div class="text-center">
-    <img src="{{ image.get_image_300x300.url }}" width="300"/>
+    <img src="{{ image.get_image_300x300.url }}" width="300" alt=""/>
     <div class="container">
       <div class="carousel-caption text-start">
         <p>

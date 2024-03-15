@@ -1,3 +1,5 @@
+import datetime
+
 import django.core.validators
 import django.db.models
 import django.utils.safestring
@@ -31,7 +33,7 @@ class Category(core.models.PublishedWithNameBaseModel):
             ),
         ],
         default=100,
-        help_text="Max 32767",
+        help_text="Максимальное значение - 32767",
     )
 
     class Meta:
@@ -109,6 +111,29 @@ class Itemmanager(django.db.models.Manager):
             )
         )
 
+    def date(self):
+        return self.on_main().filter(
+            created__gte=django.db.models.F(
+                catalog.models.Item.updated.field.name,
+            )
+            - datetime.timedelta(seconds=1),
+            created__lte=django.db.models.F(
+                catalog.models.Item.updated.field.name,
+            )
+            + datetime.timedelta(seconds=1),
+        )
+
+    def pref_image(self):
+        return self.published().prefetch_related(
+            django.db.models.Prefetch(
+                catalog.models.Item.images.field.related_query_name(),
+                queryset=catalog.models.Image.objects.only(
+                    catalog.models.Image.image.field.name,
+                    catalog.models.Image.item_id.field.name,
+                ),
+            ),
+        )
+
 
 class Item(core.models.PublishedWithNameBaseModel):
     objects = Itemmanager()
@@ -129,7 +154,8 @@ class Item(core.models.PublishedWithNameBaseModel):
                 "роскошно",
             ),
         ],
-        help_text="Введите описание объекта",
+        help_text="Описание должно содержать слова "
+                  "'превосходно' или 'роскошно'.",
     )
 
     is_on_main = django.db.models.BooleanField(default="False")
@@ -152,7 +178,7 @@ class Item(core.models.PublishedWithNameBaseModel):
         default_related_name = "items"
 
     def __str__(self):
-        return self.text
+        return self.text[:95] + "..."
 
     def image_tmb(self):
         if self.main_image.image:
@@ -189,11 +215,11 @@ class ImageBaseModel(django.db.models.Model):
             quality=51,
         )
 
-    def __str__(self):
-        return self.item.name
-
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return self.item.name
 
 
 class MainImage(ImageBaseModel):
@@ -201,14 +227,16 @@ class MainImage(ImageBaseModel):
         Item,
         on_delete=django.db.models.CASCADE,
         related_name="main_image",
+        help_text="Главное изображение товара "
+                  "(будет отображаться в списке товаров)",
     )
-
-    def __str__(self):
-        return self.item.name
 
     class Meta:
         verbose_name = "главное изображение"
         verbose_name_plural = "главные изображения"
+
+    def __str__(self):
+        return self.item.name
 
 
 class Image(ImageBaseModel):
@@ -216,6 +244,7 @@ class Image(ImageBaseModel):
         Item,
         on_delete=django.db.models.CASCADE,
         related_name="images",
+        help_text="Добавьте больше фотографий, относящихся к товару",
     )
 
     class Meta:

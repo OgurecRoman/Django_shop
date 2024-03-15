@@ -1,29 +1,115 @@
-from http import HTTPStatus
-
-from django.test import Client, TestCase
+import django.test
 import django.urls
 
+import catalog.models
 
-class CatalogViewsTests(TestCase):
-    def test_catalog_endpoint(self):
-        response = Client().get(django.urls.reverse("catalog:item_list"))
-        self.assertEqual(response.status_code, HTTPStatus.OK)
 
-    def test_catalog_new(self):
-        response = Client().get(django.urls.reverse("catalog:new"))
-        self.assertEqual(response.status_code, HTTPStatus.OK)
+class CheckFieldsTestCase(django.test.TestCase):
+    def check_content_value(self, item, exists, prefetched, not_loaded):
+        check_dict = item.__dict__
 
-    def test_catalog_friday(self):
-        response = Client().get(django.urls.reverse("catalog:friday"))
-        self.assertEqual(response.status_code, HTTPStatus.OK)
+        for value in exists:
+            self.assertIn(value, check_dict)
 
-    def test_catalog_unverified(self):
-        response = Client().get(django.urls.reverse("catalog:unverified"))
-        self.assertEqual(response.status_code, HTTPStatus.OK)
+        for value in prefetched:
+            self.assertIn(value, check_dict["_prefetched_objects_cache"])
 
-    def test_about_endpoint_1(self):
-        response = Client().get(django.urls.reverse("about:about"))
-        self.assertEqual(response.status_code, HTTPStatus.OK)
+        for value in not_loaded:
+            self.assertNotIn(value, check_dict)
+
+
+class CatalogItemsTests(CheckFieldsTestCase):
+    fixtures = ["fixtures/data.json"]
+
+    def test_items_in_context(self):
+        response = django.test.Client().get(
+            django.urls.reverse("catalog:item_list"),
+        )
+        self.assertIn("items", response.context)
+
+    def test_items_size(self):
+        response = django.test.Client().get(
+            django.urls.reverse("catalog:item_list"),
+        )
+        self.assertEqual(len(response.context["items"]), 5)
+
+    def test_items_types(self):
+        response = django.test.Client().get(
+            django.urls.reverse("catalog:item_list"),
+        )
+        self.assertTrue(
+            all(
+                isinstance(
+                    item,
+                    catalog.models.Item,
+                )
+                for item in response.context["items"]
+            ),
+        )
+
+    def test_items_loaded_values(self):
+        response = django.test.Client().get(
+            django.urls.reverse("catalog:item_list"),
+        )
+        for item in response.context["items"]:
+            self.check_content_value(
+                item,
+                (
+                    "name",
+                    "text",
+                    "category_id",
+                ),
+                ("tags",),
+                (
+                    "main_image",
+                    "images",
+                    "is_published",
+                ),
+            )
+
+
+class DetailItemTests(CheckFieldsTestCase):
+    fixtures = ["fixtures/data.json"]
+
+    def test_items_in_context(self):
+        response = django.test.Client().get(
+            django.urls.reverse("catalog:item", args=[1]),
+        )
+        self.assertIn("item", response.context)
+
+    def test_items_size(self):
+        response = django.test.Client().get(
+            django.urls.reverse("catalog:item", args=[1]),
+        )
+        self.assertIsInstance(
+            response.context["item"],
+            catalog.models.Item,
+        )
+
+    def test_items_loaded_values(self):
+        response = django.test.Client().get(
+            django.urls.reverse("catalog:item_list"),
+        )
+        self.check_content_value(
+            response.context["item"],
+            (
+                "name",
+                "text",
+                "category_id",
+            ),
+            ("tags",),
+            (
+                "main_image",
+                "images",
+                "is_published",
+            ),
+        )
+        self.check_content_value(
+            response.context["item"].tags.all()[0],
+            ("name",),
+            (),
+            ("is_published",),
+        )
 
 
 __all__ = []
