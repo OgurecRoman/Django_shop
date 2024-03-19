@@ -66,7 +66,8 @@ class Migration(migrations.Migration):
                         help_text="Max 32767",
                         validators=[
                             django.core.validators.MinValueValidator(
-                                1, message="Значение должно быть больше 0"
+                                1,
+                                message="Значение должно быть больше 0",
                             ),
                             django.core.validators.MaxValueValidator(
                                 32767,
@@ -124,7 +125,9 @@ class Migration(migrations.Migration):
                 (
                     "slug",
                     models.SlugField(
-                        max_length=200, unique=True, verbose_name="слаг"
+                        max_length=200,
+                        unique=True,
+                        verbose_name="слаг",
                     ),
                 ),
             ],

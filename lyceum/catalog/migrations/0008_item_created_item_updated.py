@@ -6,7 +6,10 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("catalog", "0007_mainimage_image_alter_item_category_and_more"),
+        (
+            "catalog",
+            "0007_mainimage_image_alter_item_category_and_more",
+        ),
     ]
 
     operations = [
@@ -14,14 +17,18 @@ class Migration(migrations.Migration):
             model_name="item",
             name="created",
             field=models.DateTimeField(
-                auto_now_add=True, null=True, verbose_name="время создания"
+                auto_now_add=True,
+                null=True,
+                verbose_name="время создания",
             ),
         ),
         migrations.AddField(
             model_name="item",
             name="updated",
             field=models.DateTimeField(
-                auto_now=True, null=True, verbose_name="время изменения"
+                auto_now=True,
+                null=True,
+                verbose_name="время изменения",
             ),
         ),
     ]

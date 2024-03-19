@@ -8,12 +8,12 @@ admin.site.register(catalog.models.Tag)
 
 class MainImage(admin.TabularInline):
     model = catalog.models.MainImage
-    fields = ("image",)
+    fields = (catalog.models.Image.image.field.name,)
 
 
 class Image(admin.TabularInline):
     model = catalog.models.Image
-    fields = ("image",)
+    fields = (catalog.models.Image.image.field.name,)
 
 
 @admin.register(catalog.models.Item)

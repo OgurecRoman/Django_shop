@@ -3,7 +3,7 @@ import django.db.models
 
 class FeedbackModel(django.db.models.Model):
     text = django.db.models.TextField(
-        "текст", help_text="Введите текст сообщения"
+        "текст",
     )
 
     created_on = django.db.models.DateTimeField(
@@ -11,4 +11,9 @@ class FeedbackModel(django.db.models.Model):
         auto_now_add=True,
     )
 
-    mail = django.db.models.EmailField("почта", help_text="Введите свою почту")
+    mail = django.db.models.EmailField(
+        "почта",
+    )
+
+
+__all__ = []

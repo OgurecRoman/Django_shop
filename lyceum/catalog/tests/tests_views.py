@@ -55,15 +55,15 @@ class CatalogItemsTests(CheckFieldsTestCase):
             self.check_content_value(
                 item,
                 (
-                    "name",
-                    "text",
-                    "category_id",
+                    catalog.models.Item.name.field.name,
+                    catalog.models.Item.text.field.name,
+                    f"{catalog.models.Item.category.field.name}_id",
                 ),
-                ("tags",),
+                (catalog.models.Item.tags.field.name,),
                 (
-                    "main_image",
-                    "images",
-                    "is_published",
+                    catalog.models.MainImage.image.field.name,
+                    catalog.models.Item.images.field.name,
+                    catalog.models.Item.is_published.field.name,
                 ),
             )
 
@@ -93,22 +93,22 @@ class DetailItemTests(CheckFieldsTestCase):
         self.check_content_value(
             response.context["item"],
             (
-                "name",
-                "text",
-                "category_id",
+                catalog.models.Item.name.field.name,
+                catalog.models.Item.text.field.name,
+                f"{catalog.models.Item.category.field.name}_id",
             ),
-            ("tags",),
+            (catalog.models.Item.tags.field.name,),
             (
-                "main_image",
-                "images",
-                "is_published",
+                catalog.models.MainImage.image.field.name,
+                catalog.models.Item.images.field.name,
+                catalog.models.Item.is_published.field.name,
             ),
         )
         self.check_content_value(
             response.context["item"].tags.all()[0],
-            ("name",),
+            (catalog.models.Item.name.field.name,),
             (),
-            ("is_published",),
+            (catalog.models.Item.is_published.field.name,),
         )
 
 

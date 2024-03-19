@@ -1,15 +1,19 @@
 {% extends "base.html" %}
-{% csrf_token %}
 
 {% block content %}
 
-<form method="post" action="куда отправлять" enctype="multipart/form-data">
-  <ul>
-    {{ form.as_ul }}
-    <li class="button">
+<div>
+  <p>{{ text }}</p>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="col-2">
+    {{ form.as_table }}
+    <div class="button">
       <button type="submit">Отправить</button>
-    </li>
-  </ul>
+    </div>
+  </div>
 </form>
 
 {% endblock %}

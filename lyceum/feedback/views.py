@@ -1,14 +1,13 @@
-import django.shortcuts
 import django.core.mail
+import django.shortcuts
 
+import feedback.forms as feedback_forms
 import lyceum.settings
-import feedback.forms
-import feedback.models
 
 
-def feedback(request):
+def feedback(request, text=""):
     template = "feedback/feedback.html"
-    form = feedback.forms.FeedbackForm(request.POST or None)
+    form = feedback_forms.FeedbackForm(request.POST or None)
     if form.is_valid():
         text = form.cleaned_data.get("text")
         mail_from = lyceum.settings.DJANGO_MAIL
@@ -22,7 +21,16 @@ def feedback(request):
             ],
             fail_silently=False,
         )
-        return django.shortcuts.redirect("catalog:item_list")
+        return django.shortcuts.redirect(
+            "feedback:feedback",
+            text="Форма успешно отправлена!",
+        )
 
-    context = {"form": form}
+    context = {
+        "form": form,
+        "text": text,
+    }
     return django.shortcuts.render(request, template, context)
+
+
+__all__ = []

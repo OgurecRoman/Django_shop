@@ -1,20 +1,23 @@
 import django.forms
 
-import feedback.models
+from feedback.models import FeedbackModel
 
 
 class FeedbackForm(django.forms.ModelForm):
     class Meta:
-        model = feedback.models.FeedbackModel
+        model = FeedbackModel
         fields = (
-            feedback.models.FeedbackModel.text.field.name,
-            feedback.models.FeedbackModel.mail.field.name,
+            FeedbackModel.text.field.name,
+            FeedbackModel.mail.field.name,
         )
         labels = {
-            feedback.models.FeedbackModel.text.field.name:
-                "Текст сообщения",
-            feedback.models.FeedbackModel.mail.field.name:
-                "Почта пользователя",
+            FeedbackModel.text.field.name: "Текст сообщения",
+            FeedbackModel.mail.field.name: "Почта пользователя",
+        }
+
+        help_texts = {
+            FeedbackModel.text.field.name: "Введите текст сообщения",
+            FeedbackModel.mail.field.name: "Введите свою почту",
         }
 
 
