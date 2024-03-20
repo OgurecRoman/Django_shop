@@ -103,6 +103,8 @@
         "category": 5,
         "text": "<p>Ваши любимые котики будут чувствовать себя превосходно!</p>",
         "is_on_main": false,
+        "created": "2024-03-14T08:15:31.269Z",
+        "updated": "2024-03-14T08:15:31.277Z",
         "tags": [
             8
         ]
@@ -118,6 +120,8 @@
         "category": 6,
         "text": "<p>Игрушка выглядит роскошно)</p>",
         "is_on_main": true,
+        "created": "2024-03-14T08:15:31.269Z",
+        "updated": "2024-03-14T08:15:31.277Z",
         "tags": [
             10,
             7
@@ -134,6 +138,8 @@
         "category": 8,
         "text": "<p>Подари своему любимцу превосходно сделанный мостик в его домик.</p>\r\n<p>Хомячок будет <strong>счастлив</strong>.</p>",
         "is_on_main": true,
+        "created": "2024-03-14T08:15:31.269Z",
+        "updated": "2024-03-14T08:15:31.277Z",
         "tags": [
             7,
             11,
@@ -151,6 +157,8 @@
         "category": 8,
         "text": "<p>Животные чувствуют себя просто превосходно!</p>",
         "is_on_main": true,
+        "created": "2024-03-14T08:15:31.269Z",
+        "updated": "2024-03-14T08:15:31.277Z",
         "tags": [
             8,
             9
@@ -167,6 +175,8 @@
         "category": 5,
         "text": "<p>мыши в доме это всегда роскошно</p>",
         "is_on_main": false,
+        "created": "2024-03-14T08:15:31.269Z",
+        "updated": "2024-03-14T08:15:31.277Z",
         "tags": [
             7
         ]
@@ -182,8 +192,63 @@
         "category": 7,
         "text": "<p>это место жительства очень роскошно</p>",
         "is_on_main": false,
+        "created": "2024-03-14T08:15:31.269Z",
+        "updated": "2024-03-14T08:15:31.277Z",
         "tags": [
             11
+        ]
+    }
+},
+{
+    "model": "catalog.item",
+    "pk": 7,
+    "fields": {
+        "name": "Шар для прогулки",
+        "is_published": true,
+        "canonical_name": "shardljaprogulki",
+        "category": 8,
+        "text": "<p>Роскошно: дом на колесах (ну почти)</p>",
+        "is_on_main": true,
+        "created": "2024-03-15T13:47:42.758Z",
+        "updated": "2024-03-15T13:48:07.568Z",
+        "tags": [
+            7,
+            11,
+            9
+        ]
+    }
+},
+{
+    "model": "catalog.item",
+    "pk": 8,
+    "fields": {
+        "name": "Игрушка для собаки",
+        "is_published": true,
+        "canonical_name": "igrushkadljasobaki",
+        "category": 6,
+        "text": "<p>Превосходно подойдет вашему питомцу</p>",
+        "is_on_main": false,
+        "created": "2024-03-15T15:22:15.824Z",
+        "updated": "2024-03-15T15:22:15.824Z",
+        "tags": [
+            7
+        ]
+    }
+},
+{
+    "model": "catalog.item",
+    "pk": 9,
+    "fields": {
+        "name": "Корм для собак",
+        "is_published": true,
+        "canonical_name": "kormdljasobak",
+        "category": 6,
+        "text": "<p>Ваши питомцы будут чувствовать себя превосходно!</p>",
+        "is_on_main": true,
+        "created": "2024-03-18T22:20:49.298Z",
+        "updated": "2024-03-18T22:20:57.152Z",
+        "tags": [
+            8
         ]
     }
 },
@@ -233,6 +298,30 @@
     "fields": {
         "image": "catalog/6/6017672725.jpg",
         "item": 6
+    }
+},
+{
+    "model": "catalog.mainimage",
+    "pk": 7,
+    "fields": {
+        "image": "catalog/7/s-l500.jpg",
+        "item": 7
+    }
+},
+{
+    "model": "catalog.mainimage",
+    "pk": 8,
+    "fields": {
+        "image": "catalog/8/dog.jpg",
+        "item": 8
+    }
+},
+{
+    "model": "catalog.mainimage",
+    "pk": 9,
+    "fields": {
+        "image": "catalog/9/6630547254.jpg",
+        "item": 9
     }
 },
 {
