@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 
@@ -19,11 +20,11 @@
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {% with form=form %}
-    {% include "includes/form.html" %}
+    {% include "includes/form.html" with inner=True form=form %}
   {% endwith %}
 
   <div class="button">
-    <button type="submit">Отправить</button>
+    <button type="submit">{% trans "Отправить" %}</button>
   </div>
 </form>
 

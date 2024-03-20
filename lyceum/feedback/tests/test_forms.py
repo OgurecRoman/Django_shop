@@ -61,5 +61,24 @@ class FormTests(django.test.TestCase):
             items_count + 1,
         )
 
+    def test_unable_create_task(self):
+        items_count = feedback.models.FeedbackModel.objects.count()
+        form_data = {
+            "text": "тестовый текст",
+            "mail": "notmail",
+        }
+
+        response = django.test.Client().post(
+            django.urls.reverse("feedback:feedback"),
+            data=form_data,
+            follow=True,
+        )
+
+        self.assertTrue(response.context["form"].has_error("mail"))
+        self.assertEqual(
+            feedback.models.FeedbackModel.objects.count(),
+            items_count,
+        )
+
 
 __all__ = []
