@@ -10,7 +10,7 @@ class BootstrapForm(django.forms.ModelForm):
             field.field.widget.attrs["class"] = "form-control"
 
 
-class FeedbackForm(django.forms.ModelForm):
+class FeedbackForm(BootstrapForm):
     class Meta:
         model = FeedbackModel
         fields = (

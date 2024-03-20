@@ -21,7 +21,7 @@ def feedback(request, text=""):
             [
                 mail_to,
             ],
-            fail_silently=False,
+            fail_silently=True,
         )
         feedback_item = feedback_models.FeedbackModel.objects.create(
             **form.cleaned_data,

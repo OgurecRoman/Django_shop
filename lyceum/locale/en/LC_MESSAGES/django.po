@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-20 10:39+0300\n"
+"POT-Creation-Date: 2024-03-20 11:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,10 +25,6 @@ msgstr ""
 #: .\lyceum\settings.py:115
 msgid "Русский"
 msgstr "Russian"
-
-#: .\templates\feedback\feedback.html:27
-msgid "Отправить"
-msgstr "Submit"
 
 #: .\templates\homepage\main.html:7
 msgid "Главная"
@@ -65,6 +61,9 @@ msgstr "Feedback"
 #: .\templates\includes\header.html:60
 msgid "Админка"
 msgstr "Admin"
+
+#~ msgid "Отправить"
+#~ msgstr "Submit"
 
 #~ msgid "profile__submit"
 #~ msgstr "Отправить"
