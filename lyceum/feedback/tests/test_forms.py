@@ -33,16 +33,32 @@ class FormTests(django.test.TestCase):
         text_help = FormTests.form.fields["mail"].help_text
         self.assertEqual(text_help, "Введите свою почту")
 
+    def test_name_label(self):
+        text_label = FormTests.form.fields["name"].label
+        self.assertEqual(text_label, "Имя отправителя")
+
+    def test_name_help(self):
+        text_help = FormTests.form.fields["name"].help_text
+        self.assertEqual(text_help, "Введите имя отправителя")
+
     def test_create_task(self):
         items_count = feedback.models.FeedbackModel.objects.count()
         form_data = {
-            "text": "тестовый текст",
-            "mail": "1@mail.ru",
+            "name": "Абоба",
+            "text": "текст",
+            "mail": "aboba@mail.com",
         }
 
         self.assertFalse(
             feedback.models.FeedbackModel.objects.filter(
                 text="тестовый текст",
+            ).exists(),
+        )
+
+        self.assertFalse(
+            feedback.models.FeedbackModel.objects.filter(
+                name="Абоба",
+                mail="aboba@mail.com",
             ).exists(),
         )
 
@@ -56,6 +72,7 @@ class FormTests(django.test.TestCase):
             response,
             django.urls.reverse("feedback:feedback"),
         )
+
         self.assertEqual(
             feedback.models.FeedbackModel.objects.count(),
             items_count + 1,
@@ -64,6 +81,7 @@ class FormTests(django.test.TestCase):
     def test_unable_create_task(self):
         items_count = feedback.models.FeedbackModel.objects.count()
         form_data = {
+            "name": "Абоба",
             "text": "тестовый текст",
             "mail": "notmail",
         }

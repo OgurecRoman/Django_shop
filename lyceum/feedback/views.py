@@ -7,15 +7,16 @@ import feedback.models as feedback_models
 import lyceum.settings
 
 
-def feedback(request, text=""):
+def feedback(request):
     template = "feedback/feedback.html"
     form = feedback_forms.FeedbackForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
+        name = form.cleaned_data.get("name")
         text = form.cleaned_data.get("text")
         mail_from = lyceum.settings.DJANGO_MAIL
         mail_to = form.cleaned_data.get("mail")
         django.core.mail.send_mail(
-            "Сообщение",
+            f"Привет, {name}",
             text,
             mail_from,
             [

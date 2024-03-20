@@ -14,16 +14,19 @@ class FeedbackForm(BootstrapForm):
     class Meta:
         model = FeedbackModel
         fields = (
+            FeedbackModel.name.field.name,
             FeedbackModel.text.field.name,
             FeedbackModel.mail.field.name,
         )
         exclude = (FeedbackModel.created_on,)
         labels = {
+            FeedbackModel.name.field.name: "Имя отправителя",
             FeedbackModel.text.field.name: "Текст сообщения",
             FeedbackModel.mail.field.name: "Почта пользователя",
         }
 
         help_texts = {
+            FeedbackModel.name.field.name: "Введите имя отправителя",
             FeedbackModel.text.field.name: "Введите текст сообщения",
             FeedbackModel.mail.field.name: "Введите свою почту",
         }
