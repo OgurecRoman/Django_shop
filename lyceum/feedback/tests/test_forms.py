@@ -5,7 +5,7 @@ import feedback.forms
 import feedback.models
 
 
-class FormTests(django.test.TestCase):
+class FeedbackFormTests(django.test.TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -18,31 +18,31 @@ class FormTests(django.test.TestCase):
         self.assertIn("form", response.context)
 
     def test_text_label(self):
-        text_label = FormTests.form.fields["text"].label
+        text_label = FeedbackFormTests.form.fields["text"].label
         self.assertEqual(text_label, "Текст сообщения")
 
     def test_text_help(self):
-        text_help = FormTests.form.fields["text"].help_text
+        text_help = FeedbackFormTests.form.fields["text"].help_text
         self.assertEqual(text_help, "Введите текст сообщения")
 
     def test_mail_label(self):
-        text_label = FormTests.form.fields["mail"].label
+        text_label = FeedbackFormTests.form.fields["mail"].label
         self.assertEqual(text_label, "Почта пользователя")
 
     def test_mail_help(self):
-        text_help = FormTests.form.fields["mail"].help_text
+        text_help = FeedbackFormTests.form.fields["mail"].help_text
         self.assertEqual(text_help, "Введите свою почту")
 
     def test_name_label(self):
-        text_label = FormTests.form.fields["name"].label
+        text_label = FeedbackFormTests.form.fields["name"].label
         self.assertEqual(text_label, "Имя отправителя")
 
     def test_name_help(self):
-        text_help = FormTests.form.fields["name"].help_text
+        text_help = FeedbackFormTests.form.fields["name"].help_text
         self.assertEqual(text_help, "Введите имя отправителя")
 
     def test_create_task(self):
-        items_count = feedback.models.FeedbackModel.objects.count()
+        items_count = feedback.models.Feedback.objects.count()
         form_data = {
             "name": "Абоба",
             "text": "текст",
@@ -50,13 +50,13 @@ class FormTests(django.test.TestCase):
         }
 
         self.assertFalse(
-            feedback.models.FeedbackModel.objects.filter(
+            feedback.models.Feedback.objects.filter(
                 text="тестовый текст",
             ).exists(),
         )
 
         self.assertFalse(
-            feedback.models.FeedbackModel.objects.filter(
+            feedback.models.Feedback.objects.filter(
                 name="Абоба",
                 mail="aboba@mail.com",
             ).exists(),
@@ -74,12 +74,12 @@ class FormTests(django.test.TestCase):
         )
 
         self.assertEqual(
-            feedback.models.FeedbackModel.objects.count(),
+            feedback.models.Feedback.objects.count(),
             items_count + 1,
         )
 
     def test_unable_create_task(self):
-        items_count = feedback.models.FeedbackModel.objects.count()
+        items_count = feedback.models.Feedback.objects.count()
         form_data = {
             "name": "Абоба",
             "text": "тестовый текст",
@@ -94,7 +94,7 @@ class FormTests(django.test.TestCase):
 
         self.assertTrue(response.context["form"].has_error("mail"))
         self.assertEqual(
-            feedback.models.FeedbackModel.objects.count(),
+            feedback.models.Feedback.objects.count(),
             items_count,
         )
 

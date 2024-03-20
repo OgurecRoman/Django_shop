@@ -2,7 +2,7 @@ import django.conf
 import django.db.models
 
 
-class FeedbackModel(django.db.models.Model):
+class Feedback(django.db.models.Model):
     class Status(django.db.models.TextChoices):
         NEW = "new", "New"
         WORK = "job", "Work"
@@ -47,15 +47,15 @@ class StatusLog(django.db.models.Model):
 
     from_status = django.db.models.CharField(
         max_length=3,
-        choices=FeedbackModel.Status.choices,
-        default=FeedbackModel.Status.NEW,
+        choices=Feedback.Status.choices,
+        default=Feedback.Status.NEW,
         db_column="from",
     )
 
     to = django.db.models.CharField(
         max_length=3,
-        choices=FeedbackModel.Status.choices,
-        default=FeedbackModel.Status.NEW,
+        choices=Feedback.Status.choices,
+        default=Feedback.Status.NEW,
     )
 
 

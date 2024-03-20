@@ -1,6 +1,6 @@
 import django.forms
 
-from feedback.models import FeedbackModel
+from feedback.models import Feedback
 
 
 class BootstrapForm(django.forms.ModelForm):
@@ -12,23 +12,23 @@ class BootstrapForm(django.forms.ModelForm):
 
 class FeedbackForm(BootstrapForm):
     class Meta:
-        model = FeedbackModel
+        model = Feedback
         fields = (
-            FeedbackModel.name.field.name,
-            FeedbackModel.text.field.name,
-            FeedbackModel.mail.field.name,
+            Feedback.name.field.name,
+            Feedback.text.field.name,
+            Feedback.mail.field.name,
         )
-        exclude = (FeedbackModel.created_on,)
+        exclude = (Feedback.created_on,)
         labels = {
-            FeedbackModel.name.field.name: "Имя отправителя",
-            FeedbackModel.text.field.name: "Текст сообщения",
-            FeedbackModel.mail.field.name: "Почта пользователя",
+            Feedback.name.field.name: "Имя отправителя",
+            Feedback.text.field.name: "Текст сообщения",
+            Feedback.mail.field.name: "Почта пользователя",
         }
 
         help_texts = {
-            FeedbackModel.name.field.name: "Введите имя отправителя",
-            FeedbackModel.text.field.name: "Введите текст сообщения",
-            FeedbackModel.mail.field.name: "Введите свою почту",
+            Feedback.name.field.name: "Введите имя отправителя",
+            Feedback.text.field.name: "Введите текст сообщения",
+            Feedback.mail.field.name: "Введите свою почту",
         }
 
 
