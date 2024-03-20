@@ -39,7 +39,6 @@ def feedback(request, text=""):
 
     context = {
         "form": form,
-        "text": text,
     }
     return django.shortcuts.render(request, template, context)
 

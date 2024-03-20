@@ -18,13 +18,21 @@
 
 <form method="post" action="/echo/submit/">
   {% csrf_token %}
-  {% with form=form %}
-    {% include "includes/form.html" %}
-  {% endwith %}
+  {% for field in form %}
+    <div>
+      {% for error in fields.errors %}
+        <div class="alert alert-danger">
+          {{ error | escape }}
+        </div>
+      {% endfor %}
+      {{ field.label_tag }} {{ field }}
+      {% if field.help_text %}
+        <p class="help">{{ field.help_text | safe }}</p>
+      {% endif %}
+    </div>
+  {% endfor %}
 
-  <div class="button">
-    <button type="submit">Отправить</button>
-  </div>
+  <input class="btn btn-primary" type="submit" value="Отправить">
 </form>
 
 {% endblock %}
