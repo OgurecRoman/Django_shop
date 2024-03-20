@@ -30,11 +30,18 @@ class Migration(migrations.Migration):
                         auto_now_add=True, verbose_name="время создания"
                     ),
                 ),
-                ("mail", models.EmailField(max_length=254, verbose_name="почта")),
+                (
+                    "mail",
+                    models.EmailField(max_length=254, verbose_name="почта"),
+                ),
                 (
                     "status",
                     models.CharField(
-                        choices=[("new", "New"), ("job", "Work"), ("ans", "Answered")],
+                        choices=[
+                            ("new", "New"),
+                            ("job", "Work"),
+                            ("ans", "Answered"),
+                        ],
                         default="new",
                         max_length=3,
                         verbose_name="статус",

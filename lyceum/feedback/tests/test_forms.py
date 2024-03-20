@@ -47,11 +47,12 @@ class FeedbackFormTests(django.test.TestCase):
             "name": "Абоба",
             "text": "текст",
             "mail": "aboba@mail.com",
+            "status": "job",
         }
 
         self.assertFalse(
             feedback.models.Feedback.objects.filter(
-                text="тестовый текст",
+                text="текст",
             ).exists(),
         )
 
