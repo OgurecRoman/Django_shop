@@ -185,6 +185,7 @@ class Item(core.models.PublishedWithNameBaseModel):
             return django.utils.safestring.mark_safe(
                 f"<img src='{self.main_image.get_image_50x50.url}'>",
             )
+
         return "Нет изображения"
 
     image_tmb.short_description = "превью"

@@ -8,6 +8,7 @@ class CatalogStaticURLTests(TestCase):
         for i in range(10):
             response = Client().get("/coffee/")
             contents.append(response.content.decode("utf-8"))
+
         self.assertIn("Я чайник", contents)
         self.assertEqual(contents.count("Я кинйач"), 1)
 
@@ -17,6 +18,7 @@ class CatalogStaticURLTests(TestCase):
         for i in range(10):
             response = Client().get("/coffee/")
             contents.append(response.content.decode("utf-8"))
+
         self.assertIn("Я чайник", contents)
         self.assertNotIn("Я кинйач", contents)
 

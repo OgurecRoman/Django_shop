@@ -17,6 +17,7 @@ def home(request):
 def echo(request):
     if request.method != "GET":
         return django.http.HttpResponseNotAllowed(["GET"])
+
     template = "homepage/echo.html"
 
     form = homepage.forms.FormEcho()
@@ -34,6 +35,7 @@ def echo_submit(request):
     form = homepage.forms.FormEcho(request.POST or None)
     if form.is_valid():
         return django.http.HttpResponse(form.cleaned_data["text"])
+
     return django.http.HttpResponseBadRequest("Form is not valid")
 
 

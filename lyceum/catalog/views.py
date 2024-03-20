@@ -3,13 +3,13 @@ import random
 
 import django.shortcuts
 
-import catalog.models
+from catalog.models import Item
 
 
 def new(request):
     template = "catalog/special.html"
     items_id = list(
-        catalog.models.Item.objects.published()
+        Item.objects.published()
         .filter(
             created__gte=datetime.date.today() - datetime.timedelta(days=7),
         )
@@ -21,7 +21,7 @@ def new(request):
     except ValueError:
         selected = items_id
 
-    items = catalog.models.Item.objects.published().filter(pk__in=selected)
+    items = Item.objects.published().filter(pk__in=selected)
 
     context = {"items": items, "name": "Новинки"}
     return django.shortcuts.render(request, template, context)
@@ -30,10 +30,10 @@ def new(request):
 def friday(request):
     template = "catalog/special.html"
     items = (
-        catalog.models.Item.objects.published()
+        Item.objects.published()
         .filter(updated__week_day=6)
         .order_by(
-            f"-{catalog.models.Item.updated.field.name}",
+            f"-{Item.updated.field.name}",
         )[:5]
     )
 
@@ -43,7 +43,7 @@ def friday(request):
 
 def unverified(request):
     template = "catalog/special.html"
-    items = catalog.models.Item.objects.date().order_by(
+    items = Item.objects.date().order_by(
         "?",
     )[:5]
 
@@ -53,14 +53,14 @@ def unverified(request):
 
 def item_list(request):
     template = "catalog/item_list.html"
-    items = catalog.models.Item.objects.published()
+    items = Item.objects.published()
     context = {"items": items}
     return django.shortcuts.render(request, template, context)
 
 
 def item_detail(request, pk):
     template = "catalog/item.html"
-    queryset = catalog.models.Item.objects.published()
+    queryset = Item.objects.published()
 
     item = django.shortcuts.get_object_or_404(queryset, pk=pk)
     context = {"item": item}

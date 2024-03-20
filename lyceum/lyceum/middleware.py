@@ -20,6 +20,7 @@ class ReverseMiddleware:
         cls.count += 1
         if cls.count != 10:
             return False
+
         cls.count = 0
         return True
 
