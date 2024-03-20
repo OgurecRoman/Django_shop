@@ -1,19 +1,21 @@
+import django.contrib
 import django.core.mail
 import django.shortcuts
 
 import feedback.forms as feedback_forms
+import feedback.models as feedback_models
 import lyceum.settings
 
 
 def feedback(request, text=""):
     template = "feedback/feedback.html"
     form = feedback_forms.FeedbackForm(request.POST or None)
-    if form.is_valid():
+    if request.method == "POST" and form.is_valid():
         text = form.cleaned_data.get("text")
         mail_from = lyceum.settings.DJANGO_MAIL
         mail_to = form.cleaned_data.get("mail")
         django.core.mail.send_mail(
-            "Заголовок",
+            "Сообщение",
             text,
             mail_from,
             [
@@ -21,9 +23,18 @@ def feedback(request, text=""):
             ],
             fail_silently=False,
         )
+        feedback_item = feedback_models.FeedbackModel.objects.create(
+            **form.cleaned_data,
+        )
+        feedback_item.save()
+
+        django.contrib.messages.success(
+            request,
+            "Форма успешно отправлена!",
+        )
+
         return django.shortcuts.redirect(
             "feedback:feedback",
-            text="Форма успешно отправлена!",
         )
 
     context = {

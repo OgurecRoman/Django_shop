@@ -1,9 +1,10 @@
 import http
 
-from django.http import HttpResponse
+import django.http
 from django.shortcuts import render
 
 import catalog.models
+import homepage.forms
 
 
 def home(request):
@@ -13,8 +14,34 @@ def home(request):
     return render(request, template, context)
 
 
+def echo(request):
+    if request.method != "GET":
+        return django.http.HttpResponseNotAllowed(["GET"])
+    template = "homepage/echo.html"
+
+    form = homepage.forms.FormEcho()
+
+    context = {
+        "form": form,
+    }
+    return django.shortcuts.render(request, template, context)
+
+
+def echo_submit(request):
+    if request.method != "POST":
+        return django.http.HttpResponseNotAllowed(["POST"])
+
+    form = homepage.forms.FormEcho(request.POST or None)
+    if form.is_valid():
+        return django.http.HttpResponse(form.cleaned_data["text"])
+    return django.http.HttpResponseBadRequest("Form is not valid")
+
+
 def coffee(request):
-    return HttpResponse("Я чайник", status=http.HTTPStatus.IM_A_TEAPOT)
+    return django.http.HttpResponse(
+        "Я чайник",
+        status=http.HTTPStatus.IM_A_TEAPOT,
+    )
 
 
 __all__ = []
