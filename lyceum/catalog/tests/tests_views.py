@@ -1,7 +1,7 @@
 import django.test
 import django.urls
 
-import catalog.models
+from catalog.models import Item, MainImage
 
 
 class CheckFieldsTestCase(django.test.TestCase):
@@ -41,7 +41,7 @@ class CatalogItemsTests(CheckFieldsTestCase):
             all(
                 isinstance(
                     item,
-                    catalog.models.Item,
+                    Item,
                 )
                 for item in response.context["items"]
             ),
@@ -55,15 +55,15 @@ class CatalogItemsTests(CheckFieldsTestCase):
             self.check_content_value(
                 item,
                 (
-                    catalog.models.Item.name.field.name,
-                    catalog.models.Item.text.field.name,
-                    f"{catalog.models.Item.category.field.name}_id",
+                    Item.name.field.name,
+                    Item.text.field.name,
+                    f"{Item.category.field.name}_id",
                 ),
-                (catalog.models.Item.tags.field.name,),
+                (Item.tags.field.name,),
                 (
-                    catalog.models.MainImage.image.field.name,
-                    catalog.models.Item.images.field.name,
-                    catalog.models.Item.is_published.field.name,
+                    MainImage.image.field.name,
+                    Item.images.field.name,
+                    Item.is_published.field.name,
                 ),
             )
 
@@ -83,7 +83,7 @@ class DetailItemTests(CheckFieldsTestCase):
         )
         self.assertIsInstance(
             response.context["item"],
-            catalog.models.Item,
+            Item,
         )
 
     def test_items_loaded_values(self):
@@ -93,22 +93,22 @@ class DetailItemTests(CheckFieldsTestCase):
         self.check_content_value(
             response.context["item"],
             (
-                catalog.models.Item.name.field.name,
-                catalog.models.Item.text.field.name,
-                f"{catalog.models.Item.category.field.name}_id",
+                Item.name.field.name,
+                Item.text.field.name,
+                f"{Item.category.field.name}_id",
             ),
-            (catalog.models.Item.tags.field.name,),
+            (Item.tags.field.name,),
             (
-                catalog.models.MainImage.image.field.name,
-                catalog.models.Item.images.field.name,
-                catalog.models.Item.is_published.field.name,
+                MainImage.image.field.name,
+                Item.images.field.name,
+                Item.is_published.field.name,
             ),
         )
         self.check_content_value(
             response.context["item"].tags.all()[0],
-            (catalog.models.Item.name.field.name,),
+            (Item.name.field.name,),
             (),
-            (catalog.models.Item.is_published.field.name,),
+            (Item.is_published.field.name,),
         )
 
 

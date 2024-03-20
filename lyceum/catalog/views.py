@@ -3,7 +3,7 @@ import random
 
 import django.shortcuts
 
-from catalog.models import Item
+from catalog.models import Category, Item
 
 
 def new(request):
@@ -21,23 +21,23 @@ def new(request):
     except ValueError:
         selected = items_id
 
-    items = Item.objects.published().filter(pk__in=selected)
-
+    items = Item.objects.published().order_by(
+        f"{Item.category.field.name}__{Category.name.field.name}",
+        Item.name.field.name,
+    )
+    items = items.filter(pk__in=selected)
     context = {"items": items, "name": "Новинки"}
     return django.shortcuts.render(request, template, context)
 
 
 def friday(request):
     template = "catalog/special.html"
-    items = (
-        Item.objects.published()
-        .filter(updated__week_day=6)
-        .order_by(
-            f"-{Item.updated.field.name}",
-        )[:5]
+    items = Item.objects.published().filter(updated__week_day=6)
+    items = items.order_by(
+        f"-{Item.updated.field.name}",
     )
 
-    context = {"items": items, "name": "Пятница"}
+    context = {"items": items[:5], "name": "Пятница"}
     return django.shortcuts.render(request, template, context)
 
 

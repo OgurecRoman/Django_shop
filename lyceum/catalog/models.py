@@ -67,37 +67,36 @@ class Tag(core.models.PublishedWithNameBaseModel):
 
 class Itemmanager(django.db.models.Manager):
     def published(self):
-        return (
+        tags_pref = django.db.models.Prefetch(
+            Item.tags.field.name,
+            queryset=Tag.objects.filter(
+                is_published=True,
+            ).only(
+                Tag.name.field.name,
+            ),
+        )
+
+        queryset = (
             self.get_queryset()
             .filter(
                 is_published=True,
                 category__is_published=True,
-            )
-            .order_by(
-                f"{Item.category.field.name}__{Category.name.field.name}",
-                Item.name.field.name,
             )
             .select_related(
                 Item.category.field.name,
                 Item.main_image.related.name,
             )
             .prefetch_related(
-                django.db.models.Prefetch(
-                    Item.tags.field.name,
-                    queryset=Tag.objects.filter(
-                        is_published=True,
-                    ).only(
-                        Tag.name.field.name,
-                    ),
-                ),
+                tags_pref,
             )
-            .only(
-                Item.name.field.name,
-                Item.text.field.name,
-                Item.main_image.related.name,
-                f"{Item.category.field.name}__{Category.name.field.name}",
-                f"{Item.tags.field.name}__{Tag.name.field.name}",
-            )
+        )
+
+        return queryset.only(
+            Item.name.field.name,
+            Item.text.field.name,
+            Item.main_image.related.name,
+            f"{Item.category.field.name}__{Category.name.field.name}",
+            f"{Item.tags.field.name}__{Tag.name.field.name}",
         )
 
     def on_main(self):

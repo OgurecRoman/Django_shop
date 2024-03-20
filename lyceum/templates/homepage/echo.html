@@ -2,13 +2,28 @@
 
 {% block content %}
 
+{% if messages %}
+  <div class="text-bg-success p-3">
+    <ul class="message">
+      {% for message in messages %}
+        <h2 {% if message.tags %} class=" {{ message.tags }} " {% endif %}>{{ message }}</h2>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+<div>
+  <p>{{ text }}</p>
+</div>
+
 <form method="post" action="/echo/submit/">
   {% csrf_token %}
-  <div class="col-2">
-    {{ form.as_table }}
-    <div class="button">
-      <button type="submit">Отправить</button>
-    </div>
+  {% with form=form %}
+    {% include "includes/form.html" %}
+  {% endwith %}
+
+  <div class="button">
+    <button type="submit">Отправить</button>
   </div>
 </form>
 
