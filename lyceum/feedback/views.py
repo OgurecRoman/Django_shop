@@ -4,7 +4,6 @@ import django.shortcuts
 import django.urls
 
 import feedback.forms as feedback_forms
-import feedback.models as feedback_models
 import lyceum.settings
 
 
@@ -16,23 +15,24 @@ def feedback(request):
     }
     if request.method == "POST" and feedback_form.is_valid():
         name = feedback_form.cleaned_data["name"]
+        if name is None:
+            name = ""
+
         text = feedback_form.cleaned_data["text"]
-        mail_to = lyceum.settings.DJANGO_MAIL
-        mail_from = feedback_form.cleaned_data["mail"]
+        mail_from = lyceum.settings.DJANGO_MAIL
+        mail_to = feedback_form.cleaned_data["mail"]
 
         django.core.mail.send_mail(
-            f"Привет, {name}",
-            f"{text}",
+            "Фидбек",
+            f"Привет {name}\n{text}",
             mail_from,
             [
                 f"{mail_to}",
             ],
             fail_silently=True,
         )
-        feedback_item = feedback_models.Feedback.objects.create(
-            **feedback_form.cleaned_data,
-        )
-        feedback_item.save()
+
+        feedback_form.save()
 
         django.contrib.messages.success(
             request,
