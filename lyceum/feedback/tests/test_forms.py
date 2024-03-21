@@ -15,7 +15,7 @@ class FeedbackFormTests(django.test.TestCase):
         response = django.test.Client().get(
             django.urls.reverse("feedback:feedback"),
         )
-        self.assertIn("feedback_form", response.context)
+        self.assertIn("form", response.context)
 
     def test_text_label(self):
         text_label = FeedbackFormTests.form.fields["text"].label
@@ -92,7 +92,7 @@ class FeedbackFormTests(django.test.TestCase):
             follow=True,
         )
 
-        self.assertTrue(response.context["feedback_form"].has_error("mail"))
+        self.assertTrue(response.context["form"].has_error("mail"))
         self.assertEqual(
             feedback.models.Feedback.objects.count(),
             items_count,

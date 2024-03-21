@@ -11,7 +11,7 @@ def feedback(request):
     template = "feedback/feedback.html"
     feedback_form = feedback_forms.FeedbackForm(request.POST or None)
     context = {
-        "feedback_form": feedback_form,
+        "form": feedback_form,
     }
     if request.method == "POST" and feedback_form.is_valid():
         name = feedback_form.cleaned_data["name"]
