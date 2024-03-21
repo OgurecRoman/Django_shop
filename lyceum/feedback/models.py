@@ -11,7 +11,8 @@ class Feedback(django.db.models.Model):
     name = django.db.models.CharField(
         "имя",
         max_length=100,
-        default="",
+        null=True,
+        blank=True,
     )
 
     text = django.db.models.TextField(
