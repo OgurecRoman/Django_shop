@@ -18,7 +18,7 @@ class FeedbackForm(BootstrapForm):
             Feedback.text.field.name,
             Feedback.mail.field.name,
         )
-        exclude = (Feedback.created_on,)
+        exclude = (Feedback.created_on.field.name,)
         labels = {
             Feedback.name.field.name: "Имя отправителя",
             Feedback.text.field.name: "Текст сообщения",

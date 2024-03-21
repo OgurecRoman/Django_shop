@@ -5,13 +5,14 @@ import django.db.models
 class Feedback(django.db.models.Model):
     class Status(django.db.models.TextChoices):
         NEW = "new", "New"
-        WORK = "job", "Work"
+        WORK = "wip", "Work in progress"
         ANSWERED = "ans", "Answered"
 
     name = django.db.models.CharField(
         "имя",
         max_length=100,
     )
+
     text = django.db.models.TextField(
         "текст",
     )

@@ -14,7 +14,7 @@ class FeedBackAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         status_old = feedback.models.Feedback.objects.get(
-            pk=obj.id,
+            pk=obj.pk,
         ).status
         if status_old != obj.status:
             feedback.models.StatusLog.objects.create(
