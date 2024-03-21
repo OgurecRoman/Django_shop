@@ -17,8 +17,8 @@ def feedback(request):
     if request.method == "POST" and feedback_form.is_valid():
         name = feedback_form.cleaned_data["name"]
         text = feedback_form.cleaned_data["text"]
-        mail_from = lyceum.settings.DJANGO_MAIL
-        mail_to = feedback_form.cleaned_data["mail"]
+        mail_to = lyceum.settings.DJANGO_MAIL
+        mail_from = feedback_form.cleaned_data["mail"]
 
         django.core.mail.send_mail(
             f"Привет, {name}",
