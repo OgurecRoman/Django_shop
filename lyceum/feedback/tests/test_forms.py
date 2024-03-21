@@ -47,7 +47,6 @@ class FeedbackFormTests(django.test.TestCase):
             "name": "Абоба",
             "text": "текст",
             "mail": "aboba@mail.com",
-            "status": "job",
         }
 
         self.assertFalse(

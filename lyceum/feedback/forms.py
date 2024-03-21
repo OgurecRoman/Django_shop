@@ -17,21 +17,18 @@ class FeedbackForm(BootstrapForm):
             Feedback.name.field.name,
             Feedback.text.field.name,
             Feedback.mail.field.name,
-            Feedback.status.field.name,
         )
         exclude = (Feedback.created_on,)
         labels = {
             Feedback.name.field.name: "Имя отправителя",
             Feedback.text.field.name: "Текст сообщения",
             Feedback.mail.field.name: "Почта пользователя",
-            Feedback.status.field.name: "Статус",
         }
 
         help_texts = {
             Feedback.name.field.name: "Введите имя отправителя",
             Feedback.text.field.name: "Введите текст сообщения",
             Feedback.mail.field.name: "Введите свою почту",
-            Feedback.status.field.name: "Установите статус",
         }
 
 

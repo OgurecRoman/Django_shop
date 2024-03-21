@@ -13,12 +13,11 @@ def feedback(request):
     if request.method == "POST" and form.is_valid():
         name = form.cleaned_data["name"]
         text = form.cleaned_data["text"]
-        status = form.cleaned_data["status"]
         mail_from = lyceum.settings.DJANGO_MAIL
         mail_to = form.cleaned_data["mail"]
         django.core.mail.send_mail(
-            f"Привет, {name}",
-            f"{text}\n\n{status}",
+            "Заголовок",
+            f"Привет, {name}\n{text}",
             mail_from,
             [
                 f"{mail_to}",
