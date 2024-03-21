@@ -16,7 +16,7 @@
 <form method="post">
   {% csrf_token %}
 
-  {% for field in form %}
+  {% for field in feedback_form %}
     <div>
       {% for error in fields.errors %}
         <div class="alert alert-danger">
