@@ -3,13 +3,30 @@ from django.contrib import admin
 import feedback.models
 
 
+class FeedbackAuther(admin.TabularInline):
+    model = feedback.models.FeedbackAuther
+    fields = (
+        feedback.models.FeedbackAuther.name.field.name,
+        feedback.models.FeedbackAuther.mail.field.name,
+    )
+    can_delete = False
+
+
+class FeedbackFile(admin.TabularInline):
+    model = feedback.models.FeedbackFile
+    fields = (feedback.models.FeedbackFile.file.field.name,)
+
+
 @admin.register(feedback.models.Feedback)
 class FeedBackAdmin(admin.ModelAdmin):
     list_display = (
-        feedback.models.Feedback.name.field.name,
         feedback.models.Feedback.text.field.name,
-        feedback.models.Feedback.mail.field.name,
         feedback.models.Feedback.status.field.name,
+    )
+
+    inlines = (
+        FeedbackAuther,
+        FeedbackFile,
     )
 
     def save_model(self, request, obj, form, change):

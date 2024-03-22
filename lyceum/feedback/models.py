@@ -1,3 +1,5 @@
+import time
+
 import django.conf
 import django.db.models
 
@@ -8,13 +10,6 @@ class Feedback(django.db.models.Model):
         WORK = "wip", "Work in progress"
         ANSWERED = "ans", "Answered"
 
-    name = django.db.models.CharField(
-        "имя",
-        max_length=100,
-        null=True,
-        blank=True,
-    )
-
     text = django.db.models.TextField(
         "текст",
     )
@@ -24,15 +19,47 @@ class Feedback(django.db.models.Model):
         auto_now_add=True,
     )
 
-    mail = django.db.models.EmailField(
-        "почта",
-    )
-
     status = django.db.models.CharField(
         "статус",
         max_length=3,
         choices=Status.choices,
         default=Status.NEW,
+    )
+
+
+class FeedbackAuther(django.db.models.Model):
+    name = django.db.models.CharField(
+        "имя",
+        max_length=150,
+        null=True,
+        blank=True,
+    )
+
+    mail = django.db.models.EmailField(
+        "почта",
+    )
+
+    feedback = django.db.models.OneToOneField(
+        Feedback,
+        related_name="auther",
+        on_delete=django.db.models.CASCADE,
+    )
+
+
+class FeedbackFile(django.db.models.Model):
+    def get_path(self, filename):
+        return f"uploads/{self.feedback_id}/{time.time()}_{filename}"
+
+    file = django.db.models.FileField(
+        "файл",
+        upload_to=get_path,
+        blank=True,
+    )
+
+    feedback = django.db.models.ForeignKey(
+        Feedback,
+        related_name="files",
+        on_delete=django.db.models.CASCADE,
     )
 
 

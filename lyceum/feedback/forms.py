@@ -1,6 +1,6 @@
 import django.forms
 
-from feedback.models import Feedback
+from feedback.models import Feedback, FeedbackAuther, FeedbackFile
 
 
 class BootstrapForm(django.forms.ModelForm):
@@ -10,25 +10,55 @@ class BootstrapForm(django.forms.ModelForm):
             field.field.widget.attrs["class"] = "form-control"
 
 
-class FeedbackForm(BootstrapForm):
+class FeedbackAutherForm(BootstrapForm):
     class Meta:
-        model = Feedback
+        model = FeedbackAuther
         fields = (
-            Feedback.name.field.name,
-            Feedback.text.field.name,
-            Feedback.mail.field.name,
+            FeedbackAuther.name.field.name,
+            FeedbackAuther.mail.field.name,
         )
-        exclude = (Feedback.created_on.field.name,)
         labels = {
-            Feedback.name.field.name: "Имя отправителя",
-            Feedback.text.field.name: "Текст сообщения",
-            Feedback.mail.field.name: "Почта пользователя",
+            FeedbackAuther.name.field.name: "Имя отправителя",
+            FeedbackAuther.mail.field.name: "Почта пользователя",
         }
 
         help_texts = {
-            Feedback.name.field.name: "Введите имя отправителя",
+            FeedbackAuther.name.field.name: "Введите имя отправителя",
+            FeedbackAuther.mail.field.name: "Введите свою почту",
+        }
+
+
+class FeedbackFileForm(BootstrapForm):
+    class Meta:
+        model = FeedbackFile
+        fields = (FeedbackFile.file.field.name,)
+        help_texts = {
+            FeedbackFile.file.field.name: "Приложите файлы",
+        }
+        widgets = {
+            FeedbackFile.file.field.name: (
+                django.forms.FileInput(
+                    attrs={
+                        "class": "form-control",
+                        "type": "file",
+                        "multiple": True,
+                    },
+                )
+            ),
+        }
+
+
+class FeedbackForm(BootstrapForm):
+    class Meta:
+        model = Feedback
+        fields = (Feedback.text.field.name,)
+        exclude = (Feedback.created_on.field.name,)
+        labels = {
+            Feedback.text.field.name: "Текст сообщения",
+        }
+
+        help_texts = {
             Feedback.text.field.name: "Введите текст сообщения",
-            Feedback.mail.field.name: "Введите свою почту",
         }
 
 
