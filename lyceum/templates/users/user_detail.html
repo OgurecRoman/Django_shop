@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Пользователь {{ user.id }}</h1>
+
+<h5>{{ user.username }}</h5>
+<div>{{ user.first_name }}</div>
+<div>{{ user.last_name }}</div>
+<div>{{ user.email }}</div>
+<div>{{ user.birthday }}</div>
+<img src="{{ user.image }}"></img>
+<div>{{ user.first_name }}</div>
+
+{% endblock %}

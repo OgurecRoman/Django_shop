@@ -26,6 +26,9 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", True)
 
 DJANGO_MAIL = os.getenv("DJANGO_MAIL", "aboba@main.ru")
+
+DEFAULT_USER_IS_ACTIVE = os.getenv("DEFAULT_USER_IS_ACTIVE", False)
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     "download.apps.DownloadConfig",
     "feedback.apps.FeedbackConfig",
     "homepage.apps.HomepageConfig",
+    "users.apps.UsersConfig",
     "django_cleanup.apps.CleanupConfig",
 ]
 
@@ -61,6 +65,7 @@ if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
     INTERNAL_IPS = ["127.0.0.1", "localhost"]
+    DEFAULT_USER_IS_ACTIVE = True
 
 ROOT_URLCONF = "lyceum.urls"
 
@@ -109,6 +114,10 @@ AUTH_PASSWORD_VALIDATORS = [
         ".NumericPasswordValidator",
     },
 ]
+
+LOGIN_URL = "/auth/login/"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/auth/login/"
 
 LANGUAGES = [
     ("en", _("English")),
