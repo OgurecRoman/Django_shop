@@ -13,9 +13,9 @@ class BootstrapForm(ModelForm):
 
 class CustomUserCreationForm(
     BootstrapForm,
-    django.contrib.auth.forms.UserChangeForm,
+    django.contrib.auth.forms.UserCreationForm,
 ):
-    class Meta(django.contrib.auth.forms.UserChangeForm.Meta):
+    class Meta(django.contrib.auth.forms.UserCreationForm.Meta):
         model = users.models.User
         fields = (
             users.models.User.username.field.name,
