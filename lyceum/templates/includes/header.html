@@ -9,7 +9,7 @@
     </a>
 
     {% with request.resolver_match.view_name as view_name %}
-    <div class="col-9 right">
+    <div class="col-11 right">
       <ul class="nav nav-pills">
         <li class="nav-item">
           <a class="nav-link {% if view_name == 'homepage:main' %}active{% endif %}"
@@ -47,22 +47,38 @@
             {% trans "Непроверенное" %}
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link {% if view_name == 'feedback:feedback' %}active{% endif %}"
-             {% if view_name != 'feedback:feedback' %}href="{% url 'feedback:feedback' %}"{% endif %}>
-            {% trans "Обратная связь" %}
-          </a>
-        </li>
-
-        {% if request.user.is_superuser %}
-          <li class="nav-item">
-              <a class="nav-link" href="{% url 'admin:index' %}">
-              {% trans "Админка" %}
+        <li>
+          <div class='btn-group'>
+          {% if request.user.is_authenticated %}
+            <a href="{% url 'users:profile' %}">
+              <button class='btn btn-success pull-right'>
+              К профилю
+            </button>
             </a>
-          </li>
-        {% endif %}
+            <a href="{% url 'users:logout' %}">
+              <button class='btn btn-success pull-right'>
+              Выйти
+            </button>
+            </a>
+
+            {% else %}
+            <a href="{% url 'users:login' %}">
+              <button class='btn btn-success pull-right'>
+              Войти
+            </button>
+            </a>
+            <a href="{% url 'users:signup' %}">
+              <button class='btn btn-success pull-right'>
+              Зарегистрироваться
+            </button>
+            </a>
+            {% endif %}
+        </div>
+        </li>
       </ul>
     </div>
+    </div>
     {% endwith %}
+
   </div>
 </header>

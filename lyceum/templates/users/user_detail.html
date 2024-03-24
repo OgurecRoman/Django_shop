@@ -1,15 +1,45 @@
 {% extends "base.html" %}
-{% load static %}
+{% load thumbnail %}
 
 {% block content %}
 <h1>Пользователь {{ user.id }}</h1>
 
 <h5>{{ user.username }}</h5>
-<div>{{ user.first_name }}</div>
-<div>{{ user.last_name }}</div>
-<div>{{ user.email }}</div>
-<div>{{ user.birthday }}</div>
-<img src="{{ user.image }}"></img>
-<div>{{ user.first_name }}</div>
+<div>
+  Имя:
+  {% if user.first_name %}
+  <div><p>{{ user.first_name }}</p></div>
+  {% else %}
+  <div><p><i>не указано</i></p></div>
+  {% endif %}
+</div>
+
+<div>
+  Фамилия:
+  {% if user.last_name %}
+  <div><p>{{ user.last_name }}</p></div>
+  {% else %}
+  <div><p><i>не указано</i></p></div>
+  {% endif %}
+</div>
+
+<div>Почта: <p>{{ user.email }}</p></div>
+
+<div>
+  Дата рождения:
+  {% if user.birthday %}
+  <div><p>{{ user.birthday }}</p></div>
+  {% else %}
+  <div><p><i>не указано</i></p></div>
+  {% endif %}
+</div>
+
+{% if user.profile.image %}
+  <img src="{{ user.profile.image.url }}" width="200" height="200">
+{% else %}
+  <div><p>Без авы :(</p></div>
+{% endif %}
+
+<div>Выпил кофе {{ user.profile.coffee_count }} раз</div>
 
 {% endblock %}

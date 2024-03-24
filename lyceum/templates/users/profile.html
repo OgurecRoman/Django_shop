@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block content %}
+
+<h2>Мой аккаунт</h2>
+{% if messages %}
+<div class="text-bg-success p-3">
+  <ul class="message">
+    {% for message in messages %}
+    <h2 {% if message.tags %} class=" {{ message.tags }} " {% endif %}>{{ message }}</h2>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+{% if user.profile.image %}
+<div class="card-body text-center">
+  {% thumbnail user.profile.image "200x200" crop="center" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="rounded-circle img-fluid">
+  {% endthumbnail %}
+  <h3 class="my-3">{{ user.username }}</h3>
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+  {% include "includes/form.html" with form=user_form %}
+  {% include "includes/form.html" with form=profile_form %}
+  <button type="submit" class="btn btn-primary">Подтвердить</button>
+</form>
+<br><br>
+<a href="{% url 'homepage:coffee' %}">
+  <button class="btn btn-primary">Выпить кофе</button>
+</a>
+{% endblock content %}

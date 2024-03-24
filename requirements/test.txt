@@ -15,5 +15,6 @@ flake8-import-order==0.18.2
 flake8-print==5.0.0
 flake8-quotes==3.4.0
 flake8-type-ignore==0.1.0.post2
+mock==5.1.0
 parameterized==0.9.0
 pep8-naming==0.13.3

@@ -1,12 +1,13 @@
 from django.contrib.auth.models import User
 import django.db.models
-
-
-def profile_directory_path(instance, filename):
-    return f"users/{instance.user.id}/{filename}"
+import django.utils.safestring
+import sorl.thumbnail
 
 
 class Profile(django.db.models.Model):
+    def profile_path(self, filename):
+        return f"users/{self.user.id}/{filename}"
+
     user = django.db.models.OneToOneField(
         User,
         on_delete=django.db.models.CASCADE,
@@ -20,7 +21,8 @@ class Profile(django.db.models.Model):
 
     image = django.db.models.ImageField(
         "аватар",
-        upload_to=profile_directory_path,
+        upload_to=profile_path,
+        null=True,
         blank=True,
     )
 
@@ -29,9 +31,17 @@ class Profile(django.db.models.Model):
         default=0,
     )
 
+    def get_image_300x300(self):
+        return sorl.thumbnail.get_thumbnail(
+            self.image,
+            "300x300",
+            crop="center",
+            quality=51,
+        )
+
     class Meta:
-        verbose_name = "дополнительное поле"
-        verbose_name_plural = "дополнительные поля"
+        verbose_name = "Профиль пользователя"
+        verbose_name_plural = "Профили пользователей"
 
 
 __all__ = []

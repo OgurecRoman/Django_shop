@@ -1,41 +1,52 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.forms import ModelForm, NumberInput
+import django.contrib.auth.forms
+from django.forms import ModelForm
 
 import users.models
 
 
-class SignUpForm(UserCreationForm):
-    def __init__(self, *args, **kwargs) -> None:
+class BootstrapForm(ModelForm):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.visible_fields():
             field.field.widget.attrs["class"] = "form-control"
 
-    class Meta(UserCreationForm.Meta):
+
+class CustomUserCreationForm(
+    BootstrapForm,
+    django.contrib.auth.forms.UserCreationForm,
+):
+    class Meta(django.contrib.auth.forms.UserChangeForm.Meta):
+        model = users.models.User
         fields = (
-            "username",
-            "email",
+            users.models.User.username.field.name,
+            users.models.User.email.field.name,
         )
 
 
-class ProfileForm(ModelForm):
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        for field in self.visible_fields():
-            field.field.widget.attrs["class"] = "form-control"
+class CustomUserChangeForm(
+    BootstrapForm,
+    django.contrib.auth.forms.UserChangeForm,
+):
+    class Meta(django.contrib.auth.forms.UserChangeForm.Meta):
+        fields = (
+            users.models.User.first_name.field.name,
+            users.models.User.last_name.field.name,
+        )
 
-    class Meta(UserCreationForm.Meta):
+
+class ProfileForm(BootstrapForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        coffee = users.models.Profile.coffee_count.field.name
+        self.fields[coffee].disabled = True
+
+    class Meta:
         model = users.models.Profile
         fields = [
             model.birthday.field.name,
             model.image.field.name,
             model.coffee_count.field.name,
         ]
-
-        widgets = {
-            users.models.Profile.coffee_count.field.name: NumberInput(
-                attrs={"readonly": "readonly"},
-            ),
-        }
 
 
 __all__ = []
