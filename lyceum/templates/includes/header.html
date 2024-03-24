@@ -47,6 +47,19 @@
             {% trans "Непроверенное" %}
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name == 'feedback:feedback' %}active{% endif %}"
+             {% if view_name != 'feedback:feedback' %}href="{% url 'feedback:feedback' %}"{% endif %}>
+            {% trans "Обратная связь" %}
+          </a>
+        </li>
+        {% if request.user.is_superuser %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'admin:index' %}">
+              {% trans "Админка" %}
+            </a>
+          </li>
+        {% endif %}
         <li>
           <div class='btn-group'>
           {% if request.user.is_authenticated %}

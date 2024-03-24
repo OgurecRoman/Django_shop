@@ -13,7 +13,7 @@ class BootstrapForm(ModelForm):
 
 class CustomUserCreationForm(
     BootstrapForm,
-    django.contrib.auth.forms.UserCreationForm,
+    django.contrib.auth.forms.UserChangeForm,
 ):
     class Meta(django.contrib.auth.forms.UserChangeForm.Meta):
         model = users.models.User
