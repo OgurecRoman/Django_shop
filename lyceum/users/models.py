@@ -15,8 +15,8 @@ class Profile(django.db.models.Model):
 
     birthday = django.db.models.DateField(
         "дата рождения",
-        null=True,
         blank=True,
+        null=True,
     )
 
     image = django.db.models.ImageField(
