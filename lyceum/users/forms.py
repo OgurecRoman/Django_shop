@@ -27,6 +27,8 @@ class CustomUserChangeForm(
     BootstrapForm,
     django.contrib.auth.forms.UserChangeForm,
 ):
+    password = None
+
     class Meta(django.contrib.auth.forms.UserChangeForm.Meta):
         fields = (
             users.models.User.first_name.field.name,
