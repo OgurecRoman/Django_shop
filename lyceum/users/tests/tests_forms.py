@@ -1,10 +1,12 @@
 import datetime
 
+import django.conf
 import django.core.exceptions
 import django.test
 import django.urls
 import django.utils.timezone
 import mock
+import parameterized
 
 import users.models
 
@@ -80,6 +82,73 @@ class UsersTests(django.test.TestCase):
             },
         )
         self.assertFalse(users.models.User.objects.exists())
+
+    @parameterized.expand(
+        (
+            ("John.Doe+JaneDOE+gmail.gom@ya.ru", "john-doe@yandex.ru"),
+            ("John.Doe+JaneDOE+gmail.gom@gmail.com", "johndoe@gmail.com"),
+        ),
+    )
+    @django.test.override_settings(DEFAULT_USER_IS_ACTIVE=True)
+    def test_user_signup_normalized_emails(self, bad_mail, good_mail):
+        data = {
+            "username": "test_username",
+            "email": bad_mail,
+            "password1": "strong_password",
+            "password2": "strong_password",
+        }
+        self.client.post(
+            django.urls.reverse("users:signup"),
+            data,
+        )
+
+        users.models.User.objects.by_mail(bad_mail)
+
+        self.assertRaises(
+            users.models.User.DoesNotExist,
+        )
+
+        created_user = users.models.User.objects.by_mail(good_mail)
+
+        self.assertEqual(
+            created_user.username,
+            data["username"],
+        )
+
+    @django.test.override_settings(DEFAULT_USER_IS_ACTIVE=True)
+    def test_user_freeze(self):
+        data = {
+            "username": "test_username",
+            "email": "john_doe@ya.ru",
+            "password1": "strong_password",
+            "password2": "strong_password",
+        }
+        self.client.post(
+            django.urls.reverse("users:signup"),
+            data,
+        )
+
+        created_user = users.models.User.objects.get(username=data["username"])
+
+        auth_data = {
+            "username": data["username"],
+            "password": "wrong_password",
+        }
+
+        self.assertTrue(created_user.is_active)
+
+        for login_attempt in range(django.conf.settings.MAX_AUTH_ATTEMPTS):
+            with self.subTest(login_attempt=login_attempt):
+                self.client.post(
+                    django.urls.reverse("users:login"),
+                    auth_data,
+                )
+
+        created_user = users.models.User.objects.get(username=data["username"])
+
+        self.assertFalse(created_user.is_active)
+
+        return auth_data
 
 
 __all__ = []

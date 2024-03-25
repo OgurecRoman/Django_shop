@@ -83,6 +83,7 @@ urlpatterns = [
     path("login/", login, name="login"),
     path("logout/", logout, name="logout"),
     path("password_change/", password_change, name="password_change"),
+    path("reactivate/<int:pk>", users.views.reactivate, name="reactivate"),
     path(
         "password_change/done/",
         password_change_done,

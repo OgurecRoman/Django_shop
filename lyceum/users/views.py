@@ -59,6 +59,18 @@ def activate(request, pk):
     return redirect(reverse("homepage:main"))
 
 
+def reactivate(request, pk):
+    user = users.models.User.objects.get(pk=pk)
+    if (
+        user.profile.freeze_date + datetime.timedelta(days=7)
+        > django.utils.timezone.now()
+    ):
+        user.is_active = True
+        user.save()
+
+    return django.shortcuts.redirect(django.urls.reverse("homepage:main"))
+
+
 def user_list(request):
     template = "users/user_list.html"
 

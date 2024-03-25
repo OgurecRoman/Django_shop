@@ -29,6 +29,8 @@ DJANGO_MAIL = os.getenv("DJANGO_MAIL", "aboba@main.ru")
 
 DEFAULT_USER_IS_ACTIVE = os.getenv("DEFAULT_USER_IS_ACTIVE", False)
 
+MAX_AUTH_ATTEMPTS = int(os.getenv("MAX_AUTH_ATTEMPTS", 5))
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -119,6 +121,10 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/auth/login/"
+
+AUTHENTICATION_BACKENDS = [
+    "users.backends.LoginBackend",
+]
 
 LANGUAGES = [
     ("en", _("English")),
