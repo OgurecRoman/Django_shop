@@ -21,7 +21,7 @@ class FeedbackFormTests(django.test.TestCase):
         response = django.test.Client().get(
             django.urls.reverse("feedback:feedback"),
         )
-        self.assertIn("feedback_form", response.context)
+        self.assertIn("form", response.context)
         self.assertIn("author_form", response.context)
         self.assertIn("files_form", response.context)
 
