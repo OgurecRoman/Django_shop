@@ -100,7 +100,7 @@ def profile(request):
     )
     context = {
         "user": request.user,
-        "user_form": user_form,
+        "form": user_form,
         "profile_form": profile_form,
     }
     if (
