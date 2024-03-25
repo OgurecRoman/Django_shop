@@ -62,11 +62,9 @@ def activate(request, pk):
 def user_list(request):
     template = "users/user_list.html"
 
-    users = django.contrib.auth.get_user_model().objects.filter(
-        is_active=True,
-    )
+    active_users = users.models.User.objects.active()
     context = {
-        "users": users,
+        "users": active_users,
     }
     return render(request, template, context)
 
@@ -75,9 +73,7 @@ def user_detail(request, pk: int):
     template = "users/user_detail.html"
 
     user = get_object_or_404(
-        users.models.User.objects.filter(
-            is_active=True,
-        ),
+        users.models.User.objects.active(),
         pk=pk,
     )
     context = {

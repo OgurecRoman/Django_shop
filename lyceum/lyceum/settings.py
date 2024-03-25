@@ -58,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "lyceum.middleware.ReverseMiddleware",
+    "users.middleware.UserMiddleware",
     "django.middleware.locale.LocaleMiddleware",
 ]
 

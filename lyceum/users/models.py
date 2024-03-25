@@ -1,7 +1,33 @@
-from django.contrib.auth.models import User
+import django.contrib.auth.models
 import django.db.models
 import django.utils.safestring
 import sorl.thumbnail
+
+def_user = django.contrib.auth.models.User
+def_user._meta.get_field("email")._unique = True
+
+
+class UserManager(django.contrib.auth.models.UserManager):
+    def get_queryset(self):
+        user = django.contrib.auth.models.User
+        profile = user.profile.related.name
+        select = super().get_queryset()
+        related = select.select.select_related(profile)
+        return related
+
+    def by_mail(self, mail):
+        normalized_email = self.normalized_email(mail)
+        return self.active().get(email=normalized_email)
+
+    def active(self):
+        return self.get_queryset().filter(is_active=True)
+
+
+class User(django.contrib.auth.models.User):
+    objects = UserManager()
+
+    class Meta:
+        proxy = True
 
 
 class Profile(django.db.models.Model):
@@ -9,7 +35,7 @@ class Profile(django.db.models.Model):
         return f"users/{self.user.id}/{filename}"
 
     user = django.db.models.OneToOneField(
-        User,
+        django.contrib.auth.models.User,
         on_delete=django.db.models.CASCADE,
     )
 
