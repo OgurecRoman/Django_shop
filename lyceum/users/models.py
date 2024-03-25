@@ -1,10 +1,13 @@
+import sys
+
 import django.contrib.auth.models
 import django.db.models
 import django.utils.safestring
 import sorl.thumbnail
 
-def_user = django.contrib.auth.models.User
-def_user._meta.get_field("email")._unique = True
+if "makemigrations" not in sys.argv and "migrate" not in sys.argv:
+    def_user = django.contrib.auth.models.User
+    def_user._meta.get_field("email")._unique = True
 
 
 class UserManager(django.contrib.auth.models.UserManager):
