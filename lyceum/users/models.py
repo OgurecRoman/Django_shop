@@ -12,8 +12,7 @@ class UserManager(django.contrib.auth.models.UserManager):
         user = django.contrib.auth.models.User
         profile = user.profile.related.name
         select = super().get_queryset()
-        related = select.select.select_related(profile)
-        return related
+        return select.select.select_related(profile)
 
     def by_mail(self, mail):
         normalized_email = self.normalized_email(mail)
