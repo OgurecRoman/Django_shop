@@ -1,11 +1,10 @@
-import datetime
-
 import django.core.validators
 import django.db.models
 import django.utils.safestring
 import sorl.thumbnail
 from tinymce.models import HTMLField
 
+import catalog.managers
 import catalog.validators
 import core.models
 
@@ -65,77 +64,8 @@ class Tag(core.models.PublishedWithNameBaseModel):
         return self.name
 
 
-class Itemmanager(django.db.models.Manager):
-    def published(self):
-        tags_pref = django.db.models.Prefetch(
-            Item.tags.field.name,
-            queryset=Tag.objects.filter(
-                is_published=True,
-            ).only(
-                Tag.name.field.name,
-            ),
-        )
-
-        queryset = (
-            self.get_queryset()
-            .filter(
-                is_published=True,
-                category__is_published=True,
-            )
-            .select_related(
-                Item.category.field.name,
-                Item.main_image.related.name,
-            )
-            .prefetch_related(
-                tags_pref,
-            )
-        )
-
-        return queryset.only(
-            Item.name.field.name,
-            Item.text.field.name,
-            Item.main_image.related.name,
-            f"{Item.category.field.name}__{Category.name.field.name}",
-            f"{Item.tags.field.name}__{Tag.name.field.name}",
-        )
-
-    def on_main(self):
-        return (
-            self.published()
-            .filter(
-                is_on_main=True,
-            )
-            .order_by(
-                Item.name.field.name,
-            )
-        )
-
-    def date(self):
-        return self.on_main().filter(
-            created__gte=django.db.models.F(
-                catalog.models.Item.updated.field.name,
-            )
-            - datetime.timedelta(seconds=1),
-            created__lte=django.db.models.F(
-                catalog.models.Item.updated.field.name,
-            )
-            + datetime.timedelta(seconds=1),
-        )
-
-    def pref_image(self):
-        return self.published().prefetch_related(
-            django.db.models.Prefetch(
-                catalog.models.Item.images.field.related_query_name(),
-                queryset=catalog.models.Image.objects.only(
-                    catalog.models.Image.image.field.name,
-                    catalog.models.Image.item_id.field.name,
-                ),
-            ),
-        )
-
-
 class Item(core.models.PublishedWithNameBaseModel):
-    objects = Itemmanager()
+    objects = catalog.managers.Itemmanager()
 
     category = django.db.models.ForeignKey(
         Category,

@@ -6,13 +6,13 @@
 
 # Активация виртуального окружения
 
-### установка виртуального окружения
+#### установка виртуального окружения
 
 ```bash 
 python3 -m venv venv 
 ```
 
-### активация
+#### активация
 
 ```bash 
 source venv/bin/activate # для linux
@@ -24,13 +24,13 @@ venv\Scripts\activate.bat # для windows
 
 # Установка необходимых пакетов
 
-### обновление pip
+#### обновление pip
 
 ```bash
 python3 -m pip install --upgrade pip
 ```
 
-### установка зависимостей
+#### установка зависимостей
 
 ```bash
 pip3 install -r requirements/prod.txt # основные зависимости
@@ -57,7 +57,7 @@ cp example.env .env # для linux
 ```
 
 ```bash
-copy example.env .env # для linux
+copy example.env .env # для windows
 ```
 
 Поменяйте значения переменных при необходимости

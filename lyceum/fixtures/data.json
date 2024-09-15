@@ -44,6 +44,17 @@
     }
 },
 {
+    "model": "catalog.category",
+    "pk": 9,
+    "fields": {
+        "name": "Еноты",
+        "is_published": true,
+        "canonical_name": "enoty",
+        "slug": "raccoons",
+        "weight": 100
+    }
+},
+{
     "model": "catalog.tag",
     "pk": 7,
     "fields": {
@@ -253,6 +264,40 @@
     }
 },
 {
+    "model": "catalog.item",
+    "pk": 10,
+    "fields": {
+        "name": "Домики",
+        "is_published": true,
+        "canonical_name": "domiki",
+        "category": 9,
+        "text": "<p>роскошно просто... енот будет доволен и не напишет миллион ишью</p>",
+        "is_on_main": true,
+        "created": "2024-03-26T06:34:10.923Z",
+        "updated": "2024-03-26T06:35:59.215Z",
+        "tags": [
+            11
+        ]
+    }
+},
+{
+    "model": "catalog.item",
+    "pk": 11,
+    "fields": {
+        "name": "Корм для енотов",
+        "is_published": true,
+        "canonical_name": "kormdljaenotov",
+        "category": 9,
+        "text": "<p>уу, а если еще и накормить.. <strong>превосходно</strong></p>",
+        "is_on_main": false,
+        "created": "2024-03-26T06:35:05.125Z",
+        "updated": "2024-03-26T06:35:05.125Z",
+        "tags": [
+            8
+        ]
+    }
+},
+{
     "model": "catalog.mainimage",
     "pk": 1,
     "fields": {
@@ -322,6 +367,22 @@
     "fields": {
         "image": "catalog/9/6630547254.jpg",
         "item": 9
+    }
+},
+{
+    "model": "catalog.mainimage",
+    "pk": 10,
+    "fields": {
+        "image": "catalog/10/1660280638_54-klubmama-ru-p-yenot-podelka-iz-bumagi-foto-54.jpg",
+        "item": 10
+    }
+},
+{
+    "model": "catalog.mainimage",
+    "pk": 11,
+    "fields": {
+        "image": "catalog/11/mrVhzTmePSs.jpg",
+        "item": 11
     }
 },
 {

@@ -3,6 +3,7 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
+import users.managers
 import users.models
 
 
@@ -26,7 +27,7 @@ class Migration(migrations.Migration):
             },
             bases=("auth.user",),
             managers=[
-                ("objects", users.models.UserManager()),
+                ("objects", users.managers.UserManager()),
             ],
         ),
         migrations.CreateModel(

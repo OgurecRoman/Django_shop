@@ -31,7 +31,7 @@ class CatalogItemsTests(CheckFieldsTestCase):
         response = django.test.Client().get(
             django.urls.reverse("catalog:item_list"),
         )
-        self.assertEqual(len(response.context["items"]), 8)
+        self.assertEqual(len(response.context["items"]), 10)
 
     def test_items_types(self):
         response = django.test.Client().get(

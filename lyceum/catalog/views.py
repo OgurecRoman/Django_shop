@@ -8,13 +8,7 @@ from catalog.models import Category, Item
 
 def new(request):
     template = "catalog/special.html"
-    items_id = list(
-        Item.objects.published()
-        .filter(
-            created__gte=datetime.date.today() - datetime.timedelta(days=7),
-        )
-        .values_list("id", flat=True),
-    )
+    items_id = list(Item.objects.news())
 
     try:
         selected = random.sample(items_id, 5)
